@@ -1,0 +1,3 @@
+[submodule "docs/external/WARScribe-Core"]
+	path = docs/external/WARScribe-Core
+	url = https://github.com/vindicta-platform/WARScribe-Core.git

@@ -12,18 +12,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Generate token
-        id: generate_token
-        uses: actions/create-github-app-token@v1
-        with:
-          app-id: ${{ secrets.APP_ID }}
-          private-key: ${{ secrets.APP_PRIVATE_KEY }}
-          owner: ${{ github.repository_owner }}
-
       - uses: actions/checkout@v4
         with:
           submodules: recursive
-          token: ${{ steps.generate_token.outputs.token }}
 
       - name: Set up Python
         uses: actions/setup-python@v4

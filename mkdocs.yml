@@ -53,7 +53,6 @@ nav:
     - CLI: external/Vindicta-CLI/docs/index.md
     - Core: external/Vindicta-Core/docs/index.md
     - Portal: external/Vindicta-Portal/docs/index.md
-    - Agents: external/Vindicta-Agents/docs/index.md
   - Components:
     - WarScribe Core: external/WARScribe-Core/docs/index.md
   - Proposals: platform/proposals/index.md

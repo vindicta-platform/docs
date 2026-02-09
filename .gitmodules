@@ -13,6 +13,3 @@
 [submodule "docs/external/Vindicta-Portal"]
 	path = docs/external/Vindicta-Portal
 	url = https://github.com/vindicta-platform/Vindicta-Portal.git
-[submodule "docs/external/Vindicta-Agents"]
-	path = docs/external/Vindicta-Agents
-	url = https://github.com/vindicta-platform/Vindicta-Agents.git

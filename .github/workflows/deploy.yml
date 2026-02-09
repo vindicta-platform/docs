@@ -24,5 +24,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Clean submodule artifacts
+        run: |
+          find docs/external -name "node_modules" -type d -exec rm -rf {} +
+          find docs/external -name "site" -type d -exec rm -rf {} +
+          find docs/external -name ".venv" -type d -exec rm -rf {} +
+
       - name: Deploy to GitHub Pages
         run: mkdocs gh-deploy --force

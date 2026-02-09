@@ -31,6 +31,17 @@ theme:
 
 plugins:
   - search
+  - exclude:
+      glob:
+        - "**/node_modules/**"
+        - "**/*.py"
+        - "**/*.pyc"
+        - "**/__pycache__/**"
+        - "**/site/**"
+        - "**/tests/**"
+        - "**/src/**"
+        - "**/.venv/**"
+        - "**/test-results/**"
 
 nav:
   - Home: index.md

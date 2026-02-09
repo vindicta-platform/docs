@@ -1,3 +1,18 @@
 [submodule "docs/external/WARScribe-Core"]
 	path = docs/external/WARScribe-Core
 	url = https://github.com/vindicta-platform/WARScribe-Core.git
+[submodule "docs/external/Vindicta-API"]
+	path = docs/external/Vindicta-API
+	url = https://github.com/vindicta-platform/Vindicta-API.git
+[submodule "docs/external/Vindicta-Core"]
+	path = docs/external/Vindicta-Core
+	url = https://github.com/vindicta-platform/Vindicta-Core.git
+[submodule "docs/external/Vindicta-CLI"]
+	path = docs/external/Vindicta-CLI
+	url = https://github.com/vindicta-platform/Vindicta-CLI.git
+[submodule "docs/external/Vindicta-Portal"]
+	path = docs/external/Vindicta-Portal
+	url = https://github.com/vindicta-platform/Vindicta-Portal.git
+[submodule "docs/external/Vindicta-Agents"]
+	path = docs/external/Vindicta-Agents
+	url = https://github.com/vindicta-platform/Vindicta-Agents.git

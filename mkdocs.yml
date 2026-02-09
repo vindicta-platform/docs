@@ -34,5 +34,18 @@ plugins:
 
 nav:
   - Home: index.md
-  - Core Components:
+  - Platform:
+    - Getting Started: platform/getting-started/index.md
+    - Architecture: platform/architecture/index.md
+    - Features: platform/features/index.md
+    - API: external/Vindicta-API/docs/index.md
+    - CLI: external/Vindicta-CLI/docs/index.md
+    - Core: external/Vindicta-Core/docs/index.md
+    - Portal: external/Vindicta-Portal/docs/index.md
+    - Agents: external/Vindicta-Agents/docs/index.md
+  - Components:
     - WarScribe Core: external/WARScribe-Core/docs/index.md
+  - Proposals: platform/proposals/index.md
+  - Specs: platform/specs/index.md
+  - Guidelines: guidelines/writing-docs.md
+  - ADRs: platform/adr/index.md

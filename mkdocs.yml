@@ -49,6 +49,8 @@ nav:
     - Getting Started: platform/getting-started/index.md
     - Architecture: platform/architecture/index.md
     - Features: platform/features/index.md
+  - Modules:
+    - Overview: external/index.md
     - API: external/Vindicta-API/docs/index.md
     - CLI: external/Vindicta-CLI/docs/index.md
     - Core: external/Vindicta-Core/docs/index.md

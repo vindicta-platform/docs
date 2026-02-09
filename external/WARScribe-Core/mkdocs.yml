@@ -1,0 +1,26 @@
+site_name: WARScribe Core
+site_description: Action notation engine for Warhammer gameplay
+site_url: https://vindicta-platform.github.io/WARScribe-Core/
+
+repo_name: vindicta-platform/WARScribe-Core
+repo_url: https://github.com/vindicta-platform/WARScribe-Core
+
+theme:
+  name: material
+  palette:
+    - scheme: slate
+      primary: amber
+      accent: orange
+  font:
+    text: Outfit
+    code: JetBrains Mono
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Notation: notation.md
+  - Scope: scope.md
+  - Contributing: contributing.md
+
+plugins:
+  - search

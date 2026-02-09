@@ -1,0 +1,235 @@
+/**
+ * Vindicta Portal Main Styles
+ * 
+ * Note: Import design-tokens.css before this file for token definitions.
+ * Tokens are defined in design-tokens.css, legacy vars below for backwards compat.
+ */
+
+:root {
+    /* Legacy aliases - use design-tokens.css values instead */
+    --bg-dark: var(--color-bg-primary, #0a0b10);
+    --glass-bg: var(--glass-bg, rgba(255, 255, 255, 0.05));
+    --glass-border: var(--glass-border, rgba(255, 255, 255, 0.1));
+    --accent-vibrant: var(--color-brand-primary, #7000ff);
+    --accent-glow: var(--color-brand-secondary, #a35dff);
+    --text-primary: var(--color-text-primary, #ffffff);
+    --text-secondary: var(--color-text-secondary, #a0a0c0);
+    --success: var(--color-success, #00ff88);
+    --danger: var(--color-danger, #ff3366);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    font-family: 'Outfit', sans-serif;
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at 50% 50%, #1a1b26 0%, #0a0b10 100%);
+    overflow-x: hidden;
+}
+
+.glass-container {
+    width: 90%;
+    max-width: 1000px;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.v-symbol {
+    background: var(--accent-vibrant);
+    color: white;
+    padding: 0 8px;
+    border-radius: 4px;
+    box-shadow: 0 0 15px var(--accent-glow);
+}
+
+.role-selector {
+    display: flex;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 30px;
+    padding: 5px;
+}
+
+.role-selector button {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 8px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.role-selector button.active {
+    background: var(--accent-vibrant);
+    color: white;
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.overview {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    padding: 2rem;
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+}
+
+.accent {
+    border-color: var(--accent-glow);
+}
+
+h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+}
+
+.balance-display {
+    font-size: 3rem;
+    font-weight: 600;
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+}
+
+.currency {
+    font-size: 1.5rem;
+    color: var(--accent-glow);
+}
+
+.status-indicator {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--success);
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--success);
+}
+
+.pulse {
+    animation: pulse-animation 2s infinite;
+}
+
+@keyframes pulse-animation {
+    0% {
+        box-shadow: 0 0 0 0px rgba(0, 255, 136, 0.4);
+    }
+
+    100% {
+        box-shadow: 0 0 0 10px rgba(0, 255, 136, 0);
+    }
+}
+
+.tank-visual {
+    width: 100%;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    margin: 1.5rem 0 0.5rem;
+    overflow: hidden;
+}
+
+.tank-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-vibrant), var(--accent-glow));
+    transition: width 0.5s ease;
+}
+
+.tank-label {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+}
+
+.history {
+    padding: 1.5rem;
+    border-radius: 20px;
+}
+
+.tx-list {
+    margin-top: 1rem;
+}
+
+.tx-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.tx-item:last-child {
+    border-bottom: none;
+}
+
+.tx-item.empty {
+    color: var(--text-secondary);
+    font-style: italic;
+    text-align: center;
+    justify-content: center;
+}
+
+footer {
+    margin-top: 3rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+    .overview {
+        grid-template-columns: 1fr;
+    }
+}

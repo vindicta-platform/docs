@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en" class="platform-theme">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Vindicta Platform</title>
+    <meta name="description"
+        content="Vindicta Platform Dashboard - Monitor your resources, predictions, and transactions.">
+
+    <!-- Design System -->
+    <link href="../assets/css/design-system.css" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        /* Grid Background */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(rgba(0, 212, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Navigation */
+        .platform-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .platform-nav .logo {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .platform-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .platform-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .platform-nav a:hover,
+        .platform-nav a.active {
+            color: var(--accent);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 7rem 2rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Page Header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .header-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background: var(--vindicta-gold);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .header-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--vindicta-gold);
+            font-weight: 700;
+            opacity: 0.7;
+        }
+
+        .page-header h1 {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .page-header h1 span {
+            color: var(--vindicta-gold);
+        }
+
+        /* View Toggle */
+        .view-toggle {
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 4px;
+        }
+
+        .view-toggle button {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .view-toggle button.active {
+            background: var(--vindicta-gold);
+            color: #000;
+        }
+
+        .view-toggle button:hover:not(.active) {
+            color: #fff;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(18, 18, 26, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 2rem;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.4s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--vindicta-gold);
+            transform: translateY(-4px);
+        }
+
+        .stat-card.primary {
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        .stat-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card.primary .stat-label {
+            color: var(--vindicta-gold);
+            opacity: 0.7;
+        }
+
+        .stat-value {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+        }
+
+        .stat-currency {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--vindicta-gold);
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: -2px;
+        }
+
+        .stat-footer {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .stat-footer.positive {
+            color: #10b981;
+        }
+
+        .stat-footer.neutral {
+            color: var(--text-muted);
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 9999px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--vindicta-gold);
+            border-radius: 9999px;
+            transition: width 1s ease;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Ledger Section */
+        .ledger-section {
+            background: rgba(18, 18, 26, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 32px;
+            padding: 2.5rem;
+        }
+
+        .ledger-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .ledger-header h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .ledger-header h2 span {
+            color: var(--vindicta-gold);
+        }
+
+        .sync-badge {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-weight: 700;
+        }
+
+        .tx-list {
+            space-y: 1rem;
+        }
+
+        .tx-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            border: 1px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tx-item:hover {
+            border-color: var(--border-color);
+        }
+
+        .tx-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .tx-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .tx-icon.deposit {
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .tx-icon.withdraw {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .tx-details h4 {
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .tx-details p {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .tx-amount {
+            font-family: var(--font-mono);
+            font-weight: 600;
+        }
+
+        .tx-amount.positive {
+            color: #10b981;
+        }
+
+        .tx-amount.negative {
+            color: #ef4444;
+        }
+
+        /* Loading State */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem;
+        }
+
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--vindicta-gold);
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Footer */
+        .platform-footer {
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .platform-footer p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .platform-footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .platform-nav ul {
+                display: none;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body class="flags-loading">
+    <style>
+        .flags-loading [data-feature] {
+            visibility: hidden !important;
+        }
+    </style>
+
+    <!-- Grid Background -->
+    <div class="grid-bg"></div>
+
+    <!-- Navigation -->
+    <nav class="platform-nav">
+        <a class="logo" href="index.html">◆ VINDICTA</a>
+        <ul>
+            <li><a href="index.html">Platform</a></li>
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="warscribe.html">WARScribe</a></li>
+            <li><a href="../club/">Club</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Page Header -->
+        <header class="page-header">
+            <div>
+                <div class="header-info">
+                    <div class="live-indicator"></div>
+                    <span class="header-label">Orbital Data Uplink Active</span>
+                </div>
+                <h1>System <span>Dashboard</span></h1>
+            </div>
+            <div class="view-toggle">
+                <button id="view-user" class="active">User</button>
+                <button id="view-admin">Arbiter</button>
+            </div>
+        </header>
+
+        <!-- Stats Grid - User View -->
+        <div class="stats-grid" data-view="user">
+
+            <!-- Personal Balance -->
+            <div class="stat-card primary">
+                <div>
+                    <div class="stat-label">Personal Resource Reserve</div>
+                    <div class="stat-value">
+                        <span class="stat-currency">$</span>
+                        <span class="stat-number" id="userBalance">0.00</span>
+                    </div>
+                </div>
+                <div class="stat-footer positive">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                    Fuel Ready for Dispatch
+                </div>
+            </div>
+
+            <!-- Global Gas Tank -->
+            <div class="stat-card">
+                <div>
+                    <div class="stat-label">Platform Sustainability Reserve</div>
+                    <div class="stat-value">
+                        <span class="stat-currency">$</span>
+                        <span class="stat-number" id="globalBalance">0.00</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="tankFill" style="width: 0%"></div>
+                    </div>
+                    <div class="stat-footer neutral">
+                        Ecosystem Power: <span id="tankPercent">0</span>%
+                    </div>
+                </div>
+            </div>
+
+            <!-- Predictions -->
+            <div class="stat-card">
+                <div>
+                    <div class="stat-label">Recent Meta-Predictions</div>
+                    <div class="stat-value">
+                        <span class="stat-number" id="predictionCount">12</span>
+                    </div>
+                </div>
+                <div class="stat-footer neutral">
+                    Last Analysis: <span style="color: #fff;">4 minutes ago</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Stats Grid - Arbiter View (Initially Hidden) -->
+        <div class="stats-grid" data-view="admin" style="display: none;">
+
+            <!-- Platform Analytics -->
+            <div class="stat-card primary">
+                <div>
+                    <div class="stat-label">Total Platform Users</div>
+                    <div class="stat-value">
+                        <span class="stat-number">1,247</span>
+                    </div>
+                </div>
+                <div class="stat-footer positive">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                    +12% This Month
+                </div>
+            </div>
+
+            <!-- API Usage -->
+            <div class="stat-card">
+                <div>
+                    <div class="stat-label">API Calls (24h)</div>
+                    <div class="stat-value">
+                        <span class="stat-number">45,821</span>
+                    </div>
+                </div>
+                <div class="stat-footer neutral">
+                    Rate Limit: 0.2% utilized
+                </div>
+            </div>
+
+            <!-- System Health -->
+            <div class="stat-card">
+                <div>
+                    <div class="stat-label">System Uptime</div>
+                    <div class="stat-value">
+                        <span class="stat-number">99.97</span>
+                        <span style="color: var(--text-muted); font-size: 1.5rem;">%</span>
+                    </div>
+                </div>
+                <div class="stat-footer positive">
+                    All Systems Operational
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Ledger Section -->
+        <div class="ledger-section" data-view="all">
+            <div class="ledger-header">
+                <h2>Immutable <span>Ledger</span></h2>
+                <span class="sync-badge">Real-time Sync Off-Chain</span>
+            </div>
+
+            <div class="tx-list" id="txList">
+                <!-- Sample Transactions -->
+                <div class="tx-item">
+                    <div class="tx-info">
+                        <div class="tx-icon deposit">💰</div>
+                        <div class="tx-details">
+                            <h4>API Credit Deposit</h4>
+                            <p>2 hours ago</p>
+                        </div>
+                    </div>
+                    <span class="tx-amount positive">+$25.00</span>
+                </div>
+
+                <div class="tx-item">
+                    <div class="tx-info">
+                        <div class="tx-icon withdraw">🔮</div>
+                        <div class="tx-details">
+                            <h4>Meta-Oracle Analysis</h4>
+                            <p>4 hours ago</p>
+                        </div>
+                    </div>
+                    <span class="tx-amount negative">-$0.15</span>
+                </div>
+
+                <div class="tx-item">
+                    <div class="tx-info">
+                        <div class="tx-icon withdraw">🎲</div>
+                        <div class="tx-details">
+                            <h4>Dice Engine Roll (x50)</h4>
+                            <p>Yesterday</p>
+                        </div>
+                    </div>
+                    <span class="tx-amount negative">-$0.02</span>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="platform-footer">
+        <p>© 2026 Vindicta Platform | <a href="../club/">Visit the Club</a></p>
+    </footer>
+
+    <!-- Firebase Remote Config and View Toggle Initialization -->
+    <script type="module">
+        import { remoteConfig, analytics } from '../assets/js/firebase-config.js';
+        import { REMOTE_CONFIG_DEFAULTS } from '../assets/js/remote-config.defaults.js';
+        import { FeatureFlagService } from '../assets/js/remote-config.js';
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const flags = new FeatureFlagService(remoteConfig, REMOTE_CONFIG_DEFAULTS, analytics);
+            await flags.initialize();
+            window.vindictaFlags = flags;
+            document.body.classList.remove('flags-loading');
+            document.dispatchEvent(new CustomEvent('vindicta:flags:ready', { detail: flags }));
+
+            // Issue #3: Check if dashboard access is enabled
+            const isDashboardEnabled = flags.isFeatureEnabled('new_dashboard');
+            if (!isDashboardEnabled) {
+                // Show access notice overlay when dashboard is not enabled
+                showAccessNotice();
+            }
+
+            // Issue #4: Setup view toggle functionality
+            setupViewToggle();
+        });
+
+        /**
+         * Issue #3: Show access notice when dashboard is not enabled
+         */
+        function showAccessNotice() {
+            const notice = document.createElement('div');
+            notice.className = 'access-notice';
+            notice.innerHTML = `
+                <div class="access-notice-content">
+                    <div class="access-notice-icon">🔒</div>
+                    <h2>Dashboard Access Restricted</h2>
+                    <p>The Dashboard feature requires authentication to access. This feature is currently in development.</p>
+                    <a href="index.html" class="access-notice-btn">Return to Platform</a>
+                </div>
+            `;
+            notice.style.cssText = `
+                position: fixed;
+                inset: 0;
+                background: rgba(10, 10, 15, 0.98);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+            `;
+            const content = notice.querySelector('.access-notice-content');
+            content.style.cssText = `
+                text-align: center;
+                padding: 3rem;
+                max-width: 500px;
+            `;
+            notice.querySelector('.access-notice-icon').style.cssText = `
+                font-size: 4rem;
+                margin-bottom: 1.5rem;
+            `;
+            notice.querySelector('h2').style.cssText = `
+                font-size: 2rem;
+                color: var(--vindicta-gold, #ffd700);
+                margin-bottom: 1rem;
+            `;
+            notice.querySelector('p').style.cssText = `
+                color: var(--text-secondary, #999);
+                margin-bottom: 2rem;
+                line-height: 1.7;
+            `;
+            notice.querySelector('.access-notice-btn').style.cssText = `
+                display: inline-block;
+                padding: 1rem 2rem;
+                background: var(--vindicta-gold, #ffd700);
+                color: #000;
+                text-decoration: none;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                border-radius: 4px;
+            `;
+            document.body.appendChild(notice);
+        }
+
+        /**
+         * Issue #4: Setup view toggle buttons
+         */
+        function setupViewToggle() {
+            const userBtn = document.getElementById('view-user');
+            const arbiterBtn = document.getElementById('view-admin');
+
+            if (!userBtn || !arbiterBtn) return;
+
+            userBtn.addEventListener('click', () => {
+                userBtn.classList.add('active');
+                arbiterBtn.classList.remove('active');
+                toggleViewSections('user');
+            });
+
+            arbiterBtn.addEventListener('click', () => {
+                arbiterBtn.classList.add('active');
+                userBtn.classList.remove('active');
+                toggleViewSections('arbiter');
+            });
+        }
+
+        /**
+         * Toggle visibility of view-specific sections
+         */
+        function toggleViewSections(view) {
+            const userSections = document.querySelectorAll('[data-view="user"]');
+            const arbiterSections = document.querySelectorAll('[data-view="arbiter"]');
+
+            userSections.forEach(el => {
+                el.style.display = view === 'user' ? '' : 'none';
+            });
+            arbiterSections.forEach(el => {
+                el.style.display = view === 'arbiter' ? '' : 'none';
+            });
+        }
+    </script>
+</body>
+
+</html>

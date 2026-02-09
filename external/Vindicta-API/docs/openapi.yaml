@@ -1,0 +1,375 @@
+openapi: 3.0.3
+info:
+  title: Vindicta Platform API
+  version: 1.0.0
+  description: |
+    REST API for the Vindicta Platform - The competitive Warhammer 40k platform.
+    
+    ## Authentication
+    All endpoints (except `/health`) require Firebase Authentication JWT tokens.
+    Include the token in the `Authorization: Bearer <token>` header.
+    
+    ## Rate Limiting
+    - **Free Tier**: 60 requests/minute per user
+    - **Rate Limit Headers**: `X-RateLimit-Remaining`, `X-RateLimit-Reset`
+    
+    ## Versioning
+    API uses URL-based versioning (`/api/v1/`). See ADR-0006 for versioning policy.
+    
+  contact:
+    name: Vindicta Platform
+    url: https://github.com/vindicta-platform
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://vindicta-api.web.app/api/v1
+    description: Production (Firebase Hosting)
+  - url: http://localhost:8000/api/v1
+    description: Local development
+
+security:
+  - FirebaseAuth: []
+
+tags:
+  - name: System
+    description: Health checks and API status
+  - name: Army
+    description: Army list management and validation
+  - name: Game
+    description: Game tracking and WARScribe integration
+  - name: Meta
+    description: Meta-Oracle predictions and analytics
+
+paths:
+  /health:
+    get:
+      summary: Health check
+      tags: [System]
+      security: []  # Public endpoint
+      responses:
+        '200':
+          description: API is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: healthy
+                  constitution:
+                    type: string
+                    example: XVI-compliant
+
+  /army/validate:
+    post:
+      summary: Validate army list
+      tags: [Army]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArmyList'
+      responses:
+        '200':
+          description: Army list is valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResult'
+        '400':
+          description: Validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /army/{armyId}:
+    get:
+      summary: Get army list by ID
+      tags: [Army]
+      parameters:
+        - name: armyId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Army list found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArmyList'
+        '404':
+          description: Army not found
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /game/start:
+    post:
+      summary: Start a new game
+      tags: [Game]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [player1ArmyId, player2ArmyId, mission]
+              properties:
+                player1ArmyId:
+                  type: string
+                  format: uuid
+                player2ArmyId:
+                  type: string
+                  format: uuid
+                mission:
+                  type: string
+                  example: "Cleansing"
+                missionPack:
+                  type: string
+                  example: "Leviathan"
+      responses:
+        '201':
+          description: Game created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+        '400':
+          description: Invalid request
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /game/{gameId}/transcript:
+    get:
+      summary: Get WARScribe transcript for game
+      tags: [Game]
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Game transcript
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameTranscript'
+        '404':
+          description: Game not found
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /meta/predict:
+    post:
+      summary: Get Meta-Oracle prediction
+      tags: [Meta]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [faction1, faction2]
+              properties:
+                faction1:
+                  type: string
+                  example: "Space Marines"
+                faction2:
+                  type: string
+                  example: "Tyranids"
+                deployment:
+                  type: string
+                  enum: [hammer_and_anvil, dawn_of_war, short_edges]
+      responses:
+        '200':
+          description: Prediction result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Prediction'
+        '400':
+          description: Invalid factions
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            X-RateLimit-Reset:
+              schema:
+                type: integer
+                description: Unix timestamp when rate limit resets
+
+components:
+  securitySchemes:
+    FirebaseAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Firebase Authentication JWT token
+
+  schemas:
+    ArmyList:
+      type: object
+      required: [id, faction, points, detachment, units]
+      properties:
+        id:
+          type: string
+          format: uuid
+        faction:
+          type: string
+          example: "Space Marines"
+        points:
+          type: integer
+          example: 2000
+        detachment:
+          type: string
+          example: "Gladius Task Force"
+        units:
+          type: array
+          items:
+            $ref: '#/components/schemas/Unit'
+
+    Unit:
+      type: object
+      required: [name, points, models]
+      properties:
+        name:
+          type: string
+          example: "Intercessor Squad"
+        points:
+          type: integer
+          example: 100
+        models:
+          type: integer
+          example: 5
+        enhancements:
+          type: array
+          items:
+            type: string
+
+    ValidationResult:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        errors:
+          type: array
+          items:
+            type: string
+        warnings:
+          type: array
+          items:
+            type: string
+
+    Game:
+      type: object
+      required: [id, player1, player2, status, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        player1:
+          $ref: '#/components/schemas/Player'
+        player2:
+          $ref: '#/components/schemas/Player'
+        mission:
+          type: string
+        status:
+          type: string
+          enum: [pending, in_progress, completed]
+        createdAt:
+          type: string
+          format: date-time
+        transcriptId:
+          type: string
+          format: uuid
+
+    Player:
+      type: object
+      required: [userId, armyId]
+      properties:
+        userId:
+          type: string
+        armyId:
+          type: string
+          format: uuid
+        score:
+          type: integer
+          minimum: 0
+
+    GameTranscript:
+      type: object
+      required: [id, gameId, version, actions]
+      properties:
+        id:
+          type: string
+          format: uuid
+        gameId:
+          type: string
+          format: uuid
+        version:
+          type: string
+          example: "warscribe-1.0"
+        actions:
+          type: array
+          items:
+            type: object
+
+    Prediction:
+      type: object
+      required: [winProbability, confidence, debateSummary]
+      properties:
+        winProbability:
+          type: object
+          properties:
+            faction1:
+              type: number
+              format: float
+              example: 0.62
+            faction2:
+              type: number
+              format: float
+              example: 0.38
+        confidence:
+          type: number
+          format: float
+          example: 0.85
+        debateSummary:
+          type: string
+          description: Meta-Oracle council debate summary
+        openingBookMatches:
+          type: integer
+          description: Number of historical games matched
+
+    ErrorResponse:
+      type: object
+      required: [error, message]
+      properties:
+        error:
+          type: string
+          example: "ValidationError"
+        message:
+          type: string
+          example: "Army exceeds 2000 points limit"
+        details:
+          type: object
+
+  responses:
+    UnauthorizedError:
+      description: Missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'

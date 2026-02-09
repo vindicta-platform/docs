@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en" class="platform-theme">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WARScribe | Vindicta Platform</title>
+    <meta name="description" content="WARScribe - The immutable standard for tactical battle recordation.">
+
+    <!-- Design System -->
+    <link href="../assets/css/design-system.css" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        /* Grid Background */
+        .grid-bg {
+            position: fixed;
+            top: -60px;
+            left: -60px;
+            right: -60px;
+            bottom: -60px;
+            background-image:
+                linear-gradient(rgba(0, 212, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(60px);
+            }
+        }
+
+        /* Navigation */
+        .platform-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .platform-nav .logo {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .platform-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .platform-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .platform-nav a:hover,
+        .platform-nav a.active {
+            color: var(--accent);
+        }
+
+        /* Layout */
+        .page-layout {
+            display: flex;
+            padding-top: 4rem;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 4rem;
+            left: 0;
+            width: 280px;
+            height: calc(100vh - 4rem);
+            background: rgba(12, 12, 18, 0.8);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+
+        .sidebar-version {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-nav a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-left: 2px solid transparent;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            color: var(--vindicta-gold);
+            border-left-color: var(--vindicta-gold);
+            background: rgba(255, 215, 0, 0.05);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 3rem;
+        }
+
+        .content-wrapper {
+            max-width: 900px;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header h1 span {
+            color: var(--vindicta-gold);
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        .page-header .accent-line {
+            width: 80px;
+            height: 4px;
+            background: var(--vindicta-gold);
+            margin-top: 1.5rem;
+        }
+
+        /* Recorder Card */
+        .recorder-card {
+            background: rgba(18, 18, 26, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .recorder-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--vindicta-gold), var(--accent), var(--vindicta-gold));
+        }
+
+        .recorder-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .recorder-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .recorder-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--vindicta-gold);
+            font-weight: 900;
+        }
+
+        .recorder-title h2 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .status-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        .status-badge.active {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: #10b981;
+        }
+
+        /* Textarea */
+        .log-textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            resize: vertical;
+            min-height: 140px;
+            transition: border-color 0.3s;
+        }
+
+        .log-textarea:focus {
+            outline: none;
+            border-color: var(--vindicta-gold);
+        }
+
+        .log-textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .textarea-wrapper {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .protocol-label {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--vindicta-gold);
+            opacity: 0.5;
+            font-weight: 700;
+        }
+
+        /* Actions */
+        .recorder-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .log-status {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .submit-btn {
+            padding: 1rem 2rem;
+            background: var(--vindicta-gold);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            font-family: var(--font-display);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Spec Content */
+        .spec-content {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .spec-content h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: #fff;
+            margin: 2rem 0 1rem;
+        }
+
+        .spec-content p {
+            margin-bottom: 1rem;
+        }
+
+        .spec-content code {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--vindicta-gold);
+        }
+
+        /* Footer */
+        .platform-footer {
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            margin-left: 280px;
+        }
+
+        .platform-footer p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .platform-footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content,
+            .platform-footer {
+                margin-left: 0;
+            }
+
+            .platform-nav ul {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body class="flags-loading">
+    <style>
+        .flags-loading [data-feature] {
+            visibility: hidden !important;
+        }
+    </style>
+
+    <!-- Grid Background -->
+    <div class="grid-bg"></div>
+
+    <!-- Navigation -->
+    <nav class="platform-nav">
+        <a class="logo" href="index.html">◆ VINDICTA</a>
+        <ul>
+            <li><a href="index.html">Platform</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="warscribe.html" class="active">WARScribe</a></li>
+            <li><a href="../club/">Club</a></li>
+        </ul>
+    </nav>
+
+    <!-- Page Layout -->
+    <div class="page-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-label">Archive Selection</div>
+                <div class="sidebar-version" id="spec-version-display">WARScribe v2.0</div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#overview" class="active">Overview</a>
+                <a href="#notation">Notation Standard</a>
+                <a href="#move-format">Move Format</a>
+                <a href="#validators">Validators</a>
+                <a href="#examples">Examples</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-wrapper">
+
+                <!-- Page Header -->
+                <header class="page-header">
+                    <h1>WARScribe <span>Core</span></h1>
+                    <p>The immutable standard for tactical battle recordation.</p>
+                    <div class="accent-line"></div>
+                </header>
+
+                <!-- Game Log Recorder -->
+                <div class="recorder-card">
+                    <div class="recorder-header">
+                        <div class="recorder-title">
+                            <div class="recorder-icon">!</div>
+                            <h2>Record Transmission</h2>
+                        </div>
+                        <span class="status-badge" id="validation-indicator">Awaiting Signal</span>
+                    </div>
+
+                    <div class="textarea-wrapper">
+                        <textarea id="log-input" class="log-textarea" rows="5"
+                            placeholder="[MOVE: Unit -> Target]"></textarea>
+                        <span class="protocol-label">Protocol v2.0</span>
+                    </div>
+
+                    <div class="recorder-actions">
+                        <div class="log-status" id="log-status"></div>
+                        <button class="submit-btn" id="submit-log" disabled
+                            style="opacity: 0.5; cursor: not-allowed;">Coming Soon</button>
+                    </div>
+                </div>
+
+                <!-- Spec Content -->
+                <div class="spec-content" id="spec-sections-container">
+                    <h2 id="overview">Overview</h2>
+                    <p>WARScribe is the standardized notation system for recording Warhammer 40,000 game actions. It
+                        provides an immutable, machine-readable format for tracking unit movements, attacks, and game
+                        state changes.</p>
+
+                    <h2 id="notation">Notation Standard</h2>
+                    <p>All actions follow the format: <code>[ACTION: Subject -> Target]</code></p>
+                    <p>Common action types include MOVE, SHOOT, CHARGE, FIGHT, and ABILITY.</p>
+
+                    <h2 id="move-format">Move Format</h2>
+                    <p>Movement actions: <code>[MOVE: UnitName -> Coordinates/Terrain]</code></p>
+                    <p>Shooting actions: <code>[SHOOT: UnitName -> TargetUnit | Weapon | Result]</code></p>
+
+                    <h2 id="validators">Validators</h2>
+                    <p>The WARScribe validator checks all entries against the current game rules and unit datasheets.
+                        Invalid entries are flagged for correction.</p>
+
+                    <h2 id="examples">Examples</h2>
+                    <p><code>[MOVE: Intercessor Squad -> Objective 1]</code></p>
+                    <p><code>[SHOOT: Eradicators -> Leman Russ | Melta Rifle | 4 Wounds]</code></p>
+                    <p><code>[CHARGE: Death Company -> Hormagaunts | Success]</code></p>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="platform-footer">
+        <p>© 2026 Vindicta Platform | <a href="../club/">Visit the Club</a></p>
+    </footer>
+
+    <!-- Sidebar Navigation (standalone, no Firebase dependency) -->
+    <script>
+        /**
+         * Issue #5: Setup sidebar navigation with click handlers and scroll-spy
+         * This script is intentionally NOT a module so it runs synchronously
+         * and is never blocked by Firebase import failures.
+         */
+        document.addEventListener('DOMContentLoaded', function () {
+            var sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+            var headers = document.querySelectorAll('.spec-content h2[id]');
+
+            // Map headers to links for easy lookup
+            var headerMap = new Map();
+            headers.forEach(function (header) {
+                var id = header.getAttribute('id');
+                var link = document.querySelector('.sidebar-nav a[href="#' + id + '"]');
+                if (link) {
+                    headerMap.set(header, link);
+                }
+            });
+
+            var isManualNav = false;
+            var manualNavTimeout;
+
+            // Click handler - update active state immediately on click
+            sidebarLinks.forEach(function (link) {
+                link.addEventListener('click', function (e) {
+                    // Set manual nav flag to prevent observer interference
+                    isManualNav = true;
+                    if (manualNavTimeout) clearTimeout(manualNavTimeout);
+
+                    // Reset flag after 1 second (enough for smooth scroll)
+                    manualNavTimeout = setTimeout(function () {
+                        isManualNav = false;
+                    }, 1000);
+
+                    // Remove active class from all
+                    sidebarLinks.forEach(function (l) { l.classList.remove('active'); });
+                    // Add to clicked
+                    link.classList.add('active');
+                });
+            });
+
+            // Scroll-spy using IntersectionObserver
+            if (headers.length > 0) {
+                var observerOptions = {
+                    root: null,
+                    rootMargin: '-80px 0px -60% 0px',
+                    threshold: 0
+                };
+
+                var observer = new IntersectionObserver(function (entries) {
+                    if (isManualNav) return;
+
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            var link = headerMap.get(entry.target);
+                            if (link) {
+                                sidebarLinks.forEach(function (l) { l.classList.remove('active'); });
+                                link.classList.add('active');
+                            }
+                        }
+                    });
+                }, observerOptions);
+
+                headers.forEach(function (header) {
+                    observer.observe(header);
+                });
+            }
+        });
+    </script>
+
+    <!-- Firebase Remote Config (loaded as module, may fail gracefully in tests) -->
+    <script type="module">
+        import { remoteConfig, analytics } from '../assets/js/firebase-config.js';
+        import { REMOTE_CONFIG_DEFAULTS } from '../assets/js/remote-config.defaults.js';
+        import { FeatureFlagService } from '../assets/js/remote-config.js';
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const flags = new FeatureFlagService(remoteConfig, REMOTE_CONFIG_DEFAULTS, analytics);
+                await flags.initialize();
+                window.vindictaFlags = flags;
+                document.body.classList.remove('flags-loading');
+                document.dispatchEvent(new CustomEvent('vindicta:flags:ready', { detail: flags }));
+            } catch (e) {
+                // Graceful degradation - remove loading state even if Firebase fails
+                document.body.classList.remove('flags-loading');
+                console.warn('Firebase Remote Config unavailable:', e.message);
+            }
+        });
+    </script>
+</body>
+
+</html>

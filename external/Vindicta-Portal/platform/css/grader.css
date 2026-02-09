@@ -1,0 +1,453 @@
+/**
+ * GRADER STYLES
+ * T002: Design system tokens applied to List Grader feature
+ */
+
+/* ============================================
+   GRADE BADGE SCALE (A+ to F)
+   ============================================ */
+.grade-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    font-size: 2rem;
+    font-weight: 900;
+    color: #000;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+    box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.2);
+}
+
+.grade-score {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary, #fff);
+    margin-top: 0.5rem;
+}
+
+.grade-tier {
+    font-size: 0.875rem;
+    color: var(--text-muted, #9ca3af);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.25rem;
+}
+
+/* ============================================
+   INPUT AREA (Glassmorphism)
+   ============================================ */
+.grader-input-area {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.grader-textarea {
+    width: 100%;
+    min-height: 200px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    color: var(--text-primary, #fff);
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    resize: vertical;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.grader-textarea:focus {
+    outline: none;
+    border-color: var(--vindicta-gold, #d4af37);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+}
+
+.grader-textarea::placeholder {
+    color: var(--text-muted, #6b7280);
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.grader-submit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--vindicta-gold, #d4af37), #b8960f);
+    color: #000;
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: none;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.grader-submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+}
+
+.grader-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.grader-clear-btn {
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    color: var(--text-muted, #9ca3af);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.grader-clear-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary, #fff);
+}
+
+/* ============================================
+   RESULTS PANEL
+   ============================================ */
+.results-panel {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-top: 2rem;
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.grade-display {
+    text-align: center;
+    padding: 2rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.grade-summary {
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.grade-summary h3 {
+    margin: 0 0 0.75rem 0;
+    font-size: 1.125rem;
+    color: var(--vindicta-gold, #d4af37);
+}
+
+.grade-summary p {
+    margin: 0;
+    color: var(--text-secondary, #e5e7eb);
+    line-height: 1.6;
+}
+
+/* ============================================
+   PARSED INFO BADGES
+   ============================================ */
+.parsed-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.info-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary, #e5e7eb);
+}
+
+/* ============================================
+   ANALYSIS DETAILS (Expandable)
+   ============================================ */
+.analysis-details {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    overflow: hidden;
+}
+
+.analysis-details summary {
+    padding: 1rem 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--vindicta-gold, #d4af37);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.analysis-details summary:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.analysis-details[open] summary {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.strengths-weaknesses {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
+}
+
+@media (max-width: 600px) {
+    .strengths-weaknesses {
+        grid-template-columns: 1fr;
+    }
+}
+
+.strengths h4,
+.weaknesses h4 {
+    margin: 0 0 0.75rem 0;
+    font-size: 1rem;
+}
+
+.strengths ul,
+.weaknesses ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    color: var(--text-secondary, #e5e7eb);
+}
+
+.strengths li,
+.weaknesses li {
+    margin-bottom: 0.5rem;
+}
+
+/* ============================================
+   MATCHUP CARDS
+   ============================================ */
+.matchups {
+    padding: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.matchups h4 {
+    margin: 0 0 1rem 0;
+}
+
+.matchup-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+@media (max-width: 600px) {
+    .matchup-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.matchup-grid h5 {
+    margin: 0 0 0.75rem 0;
+    font-size: 0.875rem;
+    color: var(--text-muted, #9ca3af);
+}
+
+.matchup-card {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.matchup-card .faction {
+    color: var(--text-secondary, #e5e7eb);
+}
+
+.matchup-card.favorable .probability {
+    color: #22c55e;
+}
+
+.matchup-card.unfavorable .probability {
+    color: #f97316;
+}
+
+/* ============================================
+   RECOMMENDATIONS
+   ============================================ */
+.recommendations {
+    padding: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.recommendations h4 {
+    margin: 0 0 0.75rem 0;
+}
+
+.recommendations ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    color: var(--text-secondary, #e5e7eb);
+}
+
+.recommendations li {
+    margin-bottom: 0.5rem;
+}
+
+/* ============================================
+   LOADING STATE
+   ============================================ */
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    gap: 1rem;
+}
+
+.loading-spinner {
+    width: 48px;
+    height: 48px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top-color: var(--vindicta-gold, #d4af37);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-text {
+    color: var(--text-muted, #9ca3af);
+    font-size: 0.875rem;
+}
+
+/* ============================================
+   ERROR STATE
+   ============================================ */
+.error-state {
+    padding: 1rem 1.5rem;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 0.75rem;
+    color: #fca5a5;
+    margin-top: 1rem;
+}
+
+/* ============================================
+   FEATURE DISABLED STATE
+   ============================================ */
+.feature-disabled {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.feature-disabled h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.feature-disabled p {
+    color: var(--text-muted, #9ca3af);
+}
+
+/* ============================================
+   FILE INPUT
+   ============================================ */
+.file-upload-area {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.file-input-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 0.5rem;
+    color: var(--text-muted, #9ca3af);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.file-input-label:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--vindicta-gold, #d4af37);
+}
+
+.file-input-label input[type="file"] {
+    display: none;
+}
+
+.char-count {
+    font-size: 0.75rem;
+    color: var(--text-muted, #6b7280);
+    text-align: right;
+    margin-top: 0.5rem;
+}
+
+/* ============================================
+   MOBILE RESPONSIVE
+   ============================================ */
+@media (max-width: 375px) {
+    .grader-input-area {
+        padding: 1rem;
+    }
+
+    .grader-textarea {
+        min-height: 150px;
+        font-size: 0.8125rem;
+    }
+
+    .grader-submit-btn {
+        width: 100%;
+        padding: 0.875rem;
+    }
+
+    .grade-badge {
+        width: 64px;
+        height: 64px;
+        font-size: 1.5rem;
+    }
+
+    .results-panel {
+        padding: 1.25rem;
+    }
+}

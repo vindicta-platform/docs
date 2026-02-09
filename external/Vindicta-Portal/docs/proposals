@@ -1,0 +1,156 @@
+# Feature Proposal: Progressive Web App (PWA) Support
+
+**Proposal ID**: FEAT-001  
+**Author**: Unified Product Architect (Autonomous)  
+**Created**: 2026-02-01  
+**Status**: Draft  
+**Priority**: High  
+
+---
+
+## Part A: Software Design Document (SDD)
+
+### 1. Executive Summary
+
+Enable the Vindicta Portal to function as a Progressive Web App, allowing users to install the portal on their devices, access content offline, and receive push notifications for events.
+
+### 2. System Architecture
+
+#### 2.1 Current State
+- Static HTML site deployed on Firebase Hosting
+- No service worker implementation
+- No offline capability
+- No installable experience
+
+#### 2.2 Proposed Changes
+
+```
+Vindicta-Portal/
+├── manifest.json              [NEW] Web app manifest
+├── sw.js                      [NEW] Service worker
+├── index.html                 [MODIFY] Add manifest link, SW registration
+├── club/
+│   └── *.html                 [MODIFY] Add manifest links
+├── platform/
+│   └── *.html                 [MODIFY] Add manifest links
+└── assets/
+    └── icons/                 [NEW] PWA icons (192x192, 512x512)
+```
+
+#### 2.3 Service Worker Strategy
+
+| Resource Type | Strategy | Rationale |
+|--------------|----------|-----------|
+| HTML pages | Network-first, cache fallback | Ensure fresh content when online |
+| CSS/JS | Cache-first | Stable assets, rarely change |
+| Images | Cache-first with expiry | Large assets, optimize bandwidth |
+| API calls | Network-only | Real-time data from Cloud Run |
+
+#### 2.4 Manifest Configuration
+
+```json
+{
+  "name": "Vindicta Portal",
+  "short_name": "Vindicta",
+  "description": "The Apex of Competitive Tabletop Wargaming",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#030305",
+  "background_color": "#030305",
+  "icons": [...]
+}
+```
+
+### 3. Security Considerations
+
+- Service worker scope limited to same-origin
+- HTTPS enforced (Firebase Hosting default)
+- Cache-Control headers configured appropriately
+- No sensitive data cached locally
+
+### 4. Scalability
+
+- Workbox library for production-grade caching
+- Precache manifest auto-generated at build time
+- Background sync for form submissions (join.html)
+
+### 5. Assumptions
+
+- Firebase Hosting continues to provide HTTPS by default
+- Users have modern browsers (Chrome 67+, Firefox 57+, Safari 11.1+)
+- Club events data is acceptable to be slightly stale when offline
+
+---
+
+## Part B: Behavior Driven Development (BDD)
+
+### User Stories
+
+#### US-001: App Installation
+**As a** club member  
+**I want to** install the Vindicta Portal on my phone  
+**So that** I can quickly access team info without opening a browser
+
+#### US-002: Offline Event Viewing
+**As a** competitive player  
+**I want to** view upcoming events when I have no internet  
+**So that** I can check schedules at venues with poor connectivity
+
+#### US-003: Home Screen Access
+**As a** returning visitor  
+**I want to** see an "Add to Home Screen" prompt  
+**So that** I can easily install the app
+
+### Acceptance Criteria
+
+```gherkin
+Feature: Progressive Web App Installation
+
+  Scenario: User installs PWA on mobile device
+    Given the user visits the Vindicta Portal on a supported mobile browser
+    And the install criteria are met (HTTPS, manifest, service worker)
+    When the browser detects the site meets PWA criteria
+    Then an "Add to Home Screen" prompt should be displayed
+    And clicking "Install" should add the app to the home screen
+
+  Scenario: Offline access to static content
+    Given the user has previously visited the Portal
+    And the service worker has cached static assets
+    When the user loses internet connectivity
+    And navigates to the Portal landing page
+    Then the page should load from cache
+    And display an "Offline" indicator in the footer
+
+  Scenario: Cache invalidation on deployment
+    Given a new version of the Portal is deployed
+    When the user visits the site while online
+    Then the service worker should detect the update
+    And prompt the user to refresh for new content
+```
+
+### Technical Acceptance Criteria
+
+- [ ] Lighthouse PWA score ≥ 90
+- [ ] Service worker registered on all pages
+- [ ] Web manifest validates against W3C spec
+- [ ] Offline fallback page functional
+- [ ] Icons display correctly on iOS and Android
+
+---
+
+## Implementation Estimate
+
+| Phase | Effort | Dependencies |
+|-------|--------|--------------|
+| Manifest + Icons | 2 hours | Design team for icons |
+| Service Worker | 4 hours | None |
+| Testing | 2 hours | Multiple devices |
+| **Total** | **8 hours** | |
+
+---
+
+## References
+
+- [Web App Manifest Spec](https://www.w3.org/TR/appmanifest/)
+- [Service Worker API](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
+- [Workbox Documentation](https://developers.google.com/web/tools/workbox)

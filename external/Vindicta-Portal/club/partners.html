@@ -1,0 +1,392 @@
+<!DOCTYPE HTML>
+<html lang="en" class="club-theme">
+
+<head>
+    <title>Partners | Team Vindicta</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description"
+        content="Our partners and community allies - Team USA 40k, Stat Check, Art of War, and more." />
+
+    <!-- Design System -->
+    <link href="../assets/css/design-system.css" rel="stylesheet" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .club-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: var(--z-sticky);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .club-nav .logo {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--vindicta-gold);
+            text-decoration: none;
+        }
+
+        .club-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .club-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .club-nav a:hover,
+        .club-nav a.active {
+            color: var(--vindicta-gold);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 10rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(22, 33, 62, 0.5) 0%, var(--bg-primary) 100%);
+        }
+
+        .page-header h1 {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--vindicta-gold);
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        /* Content */
+        .partners-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title h2 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--border-color), transparent);
+        }
+
+        /* Partner Cards */
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .partner-card {
+            background: rgba(30, 30, 50, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .partner-card:hover {
+            border-color: var(--vindicta-gold);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .partner-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .partner-name {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .partner-category {
+            color: var(--vindicta-gold);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .partner-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .partner-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--vindicta-gold);
+            text-decoration: none;
+            font-weight: 600;
+            transition: gap 0.3s;
+        }
+
+        .partner-link:hover {
+            gap: 1rem;
+        }
+
+        /* Community Feed */
+        .community-section {
+            margin-top: 4rem;
+        }
+
+        .feed-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feed-item {
+            background: rgba(30, 30, 50, 0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .feed-item:hover {
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        .feed-title {
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .feed-title a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .feed-title a:hover {
+            color: var(--vindicta-gold);
+        }
+
+        .feed-meta {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--vindicta-gold);
+            margin-bottom: 1rem;
+        }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .club-nav {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+
+            .club-nav .logo {
+                width: 100%;
+                text-align: center;
+            }
+
+            .club-nav ul {
+                display: none;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .partners-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="club-nav">
+        <a class="logo" href="index.html">⚔️ VINDICTA</a>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="partners.html" class="active">Partners</a></li>
+            <li><a href="join.html">Join Us</a></li>
+        </ul>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <h1>🤝 Our Partners</h1>
+        <p>Community allies and resources we trust</p>
+    </header>
+
+    <!-- Partners Content -->
+    <div class="partners-content">
+
+        <!-- Partners Grid -->
+        <section>
+            <div class="section-title">
+                <h2>Featured Partners</h2>
+            </div>
+
+            <div class="partners-grid">
+                <!-- Team USA 40k -->
+                <div class="partner-card">
+                    <div class="partner-icon">🇺🇸</div>
+                    <h3 class="partner-name">Team USA 40k</h3>
+                    <span class="partner-category">National Team</span>
+                    <p class="partner-description">The official US national Warhammer 40,000 team. Representing America
+                        at the World Team Championship and other international events.</p>
+                    <a href="https://teamusa40k.com" target="_blank" class="partner-link">Visit Site →</a>
+                </div>
+
+                <!-- Stat Check -->
+                <div class="partner-card">
+                    <div class="partner-icon">📊</div>
+                    <h3 class="partner-name">Stat Check</h3>
+                    <span class="partner-category">Data & Analytics</span>
+                    <p class="partner-description">Tournament data, meta analysis, and competitive statistics for the
+                        40k scene. Essential for serious competitive players.</p>
+                    <a href="https://www.stat-check.com" target="_blank" class="partner-link">Visit Site →</a>
+                </div>
+
+                <!-- Art of War -->
+                <div class="partner-card">
+                    <div class="partner-icon">🎓</div>
+                    <h3 class="partner-name">Art of War</h3>
+                    <span class="partner-category">Coaching & Content</span>
+                    <p class="partner-description">Premium coaching and competitive content. Tier-1 players sharing
+                        their knowledge to help you level up your game.</p>
+                    <a href="https://theartofwar40k.com" target="_blank" class="partner-link">Visit Site →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Feed -->
+        <section class="community-section">
+            <div class="section-title">
+                <h2>Latest from the Community</h2>
+            </div>
+
+            <div class="feed-grid">
+                <div class="feed-item">
+                    <h4 class="feed-title">
+                        <a href="https://www.stat-check.com" target="_blank">Weekly Meta Report: Top Factions in January
+                            2026</a>
+                    </h4>
+                    <p class="feed-meta">Stat Check • 2 days ago</p>
+                </div>
+
+                <div class="feed-item">
+                    <h4 class="feed-title">
+                        <a href="https://theartofwar40k.com" target="_blank">Mastering the Charge Phase: Pro Tips</a>
+                    </h4>
+                    <p class="feed-meta">Art of War • 5 days ago</p>
+                </div>
+
+                <div class="feed-item">
+                    <h4 class="feed-title">
+                        <a href="https://teamusa40k.com" target="_blank">WTC 2026: Team USA Roster Announced</a>
+                    </h4>
+                    <p class="feed-meta">Team USA 40k • 1 week ago</p>
+                </div>
+
+                <div class="feed-item">
+                    <h4 class="feed-title">
+                        <a href="https://www.stat-check.com" target="_blank">New Edition FAQ Impact Analysis</a>
+                    </h4>
+                    <p class="feed-meta">Stat Check • 1 week ago</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">⚔️ VINDICTA</div>
+        <p>© 2026 Team Vindicta | Long Island, NY</p>
+        <p style="margin-top: 0.5rem;"><a href="../platform/"
+                style="color: var(--vindicta-gold); text-decoration: none;">Access the Platform →</a></p>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+site_name: Vindicta Core
+site_description: Shared primitives and settings for the Vindicta Platform
+site_url: https://vindicta-platform.github.io/Vindicta-Core/
+
+repo_name: vindicta-platform/Vindicta-Core
+repo_url: https://github.com/vindicta-platform/Vindicta-Core
+
+theme:
+  name: material
+  palette:
+    - scheme: slate
+      primary: deep-purple
+      accent: amber
+  font:
+    text: Outfit
+    code: JetBrains Mono
+  features:
+    - navigation.instant
+    - navigation.sections
+    - search.highlight
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - API Reference: api-reference.md
+  - Models: models.md
+  - Configuration: configuration.md
+  - Contributing: contributing.md
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
+  - pymdownx.superfences

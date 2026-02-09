@@ -1,0 +1,34 @@
+site_name: Vindicta API
+site_description: FastAPI REST endpoints for the Vindicta Platform
+site_url: https://vindicta-platform.github.io/Vindicta-API/
+
+repo_name: vindicta-platform/Vindicta-API
+repo_url: https://github.com/vindicta-platform/Vindicta-API
+
+theme:
+  name: material
+  palette:
+    - scheme: slate
+      primary: teal
+      accent: amber
+  font:
+    text: Outfit
+    code: JetBrains Mono
+  features:
+    - navigation.instant
+    - navigation.sections
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Endpoints: endpoints.md
+  - Authentication: authentication.md
+  - Contributing: contributing.md
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - pymdownx.superfences

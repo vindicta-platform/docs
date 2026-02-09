@@ -1,0 +1,482 @@
+<!DOCTYPE HTML>
+<html lang="en" class="club-theme">
+
+<head>
+    <title>The Team | Team Vindicta</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description"
+        content="Meet the Prime Council and members of Team Vindicta - Long Island's premier Warhammer 40K club." />
+
+    <!-- Design System -->
+    <link href="../assets/css/design-system.css" rel="stylesheet" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .club-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: var(--z-sticky);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .club-nav .logo {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--vindicta-gold);
+            text-decoration: none;
+        }
+
+        .club-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .club-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .club-nav a:hover,
+        .club-nav a.active {
+            color: var(--vindicta-gold);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 10rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(22, 33, 62, 0.5) 0%, var(--bg-primary) 100%);
+        }
+
+        .page-header h1 {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--vindicta-gold);
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Team Content */
+        .team-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+        }
+
+        /* Section Title */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title h2 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--border-color), transparent);
+        }
+
+        .section-badge {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--vindicta-gold);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        /* Prime Council Section */
+        .prime-council {
+            margin-bottom: 4rem;
+        }
+
+        .council-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .council-card {
+            background: linear-gradient(135deg, rgba(30, 30, 50, 0.9) 0%, rgba(20, 20, 35, 0.95) 100%);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .council-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--vindicta-gold), #e94560);
+        }
+
+        .council-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--vindicta-gold);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.1);
+        }
+
+        .council-rank {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--vindicta-gold);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .council-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(233, 69, 96, 0.2) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid var(--vindicta-gold);
+        }
+
+        .council-name {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.25rem;
+        }
+
+        .council-title {
+            color: var(--vindicta-gold);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .council-bio {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .council-faction {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Members Section */
+        .members-section {
+            margin-bottom: 4rem;
+        }
+
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .member-card {
+            background: rgba(30, 30, 50, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .member-card:hover {
+            border-color: rgba(255, 215, 0, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .member-card.placeholder {
+            border-style: dashed;
+            opacity: 0.5;
+        }
+
+        .member-avatar {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .member-card.placeholder .member-avatar {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        .member-name {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.25rem;
+        }
+
+        .member-card.placeholder .member-name {
+            color: var(--text-muted);
+        }
+
+        .member-faction {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        /* Join CTA */
+        .join-cta {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: rgba(22, 33, 62, 0.3);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .join-cta h3 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .join-cta p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--vindicta-gold);
+            margin-bottom: 1rem;
+        }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .club-nav {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+
+            .club-nav .logo {
+                width: 100%;
+                text-align: center;
+            }
+
+            .club-nav ul {
+                display: none;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .council-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="club-nav">
+        <a class="logo" href="index.html">⚔️ VINDICTA</a>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="team.html" class="active">Team</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="partners.html">Partners</a></li>
+            <li><a href="join.html">Join Us</a></li>
+        </ul>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <h1>The Team</h1>
+        <p>Meet the warriors who lead Team Vindicta into battle</p>
+    </header>
+
+    <!-- Team Content -->
+    <div class="team-content">
+
+        <!-- Prime Council Section -->
+        <section class="prime-council">
+            <div class="section-title">
+                <h2>Prime Council</h2>
+                <span class="section-badge">Leadership</span>
+            </div>
+
+            <div class="council-grid">
+                <!-- Brandon Fox -->
+                <div class="council-card">
+                    <span class="council-rank">Founder</span>
+                    <div class="council-avatar">🦊</div>
+                    <h3 class="council-name">Brandon Fox</h3>
+                    <p class="council-title">Supreme Architect</p>
+                    <p class="council-bio">Founder of Team Vindicta and architect of the Vindicta Platform. Bringing
+                        data-driven strategy and technological innovation to competitive Warhammer 40K.</p>
+                    <span class="council-faction">🔱 Primary: Multiple Factions</span>
+                </div>
+
+                <!-- Anthony Vanella -->
+                <div class="council-card">
+                    <span class="council-rank">Co-Founder</span>
+                    <div class="council-avatar">⚡</div>
+                    <h3 class="council-name">Anthony Vanella</h3>
+                    <p class="council-title">War Marshal</p>
+                    <p class="council-bio">Strategic mastermind and tournament organizer. Champions the competitive
+                        spirit and ensures every event runs with military precision.</p>
+                    <span class="council-faction">⚔️ Primary: To Be Confirmed</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Active Members Section -->
+        <section class="members-section">
+            <div class="section-title">
+                <h2>Active Members</h2>
+                <span class="section-badge">The Ranks</span>
+            </div>
+
+            <div class="members-grid">
+                <!-- Placeholder Members -->
+                <div class="member-card placeholder">
+                    <div class="member-avatar">+</div>
+                    <h4 class="member-name">Open Position</h4>
+                    <p class="member-faction">Join the ranks</p>
+                </div>
+
+                <div class="member-card placeholder">
+                    <div class="member-avatar">+</div>
+                    <h4 class="member-name">Open Position</h4>
+                    <p class="member-faction">Join the ranks</p>
+                </div>
+
+                <div class="member-card placeholder">
+                    <div class="member-avatar">+</div>
+                    <h4 class="member-name">Open Position</h4>
+                    <p class="member-faction">Join the ranks</p>
+                </div>
+
+                <div class="member-card placeholder">
+                    <div class="member-avatar">+</div>
+                    <h4 class="member-name">Open Position</h4>
+                    <p class="member-faction">Join the ranks</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Join CTA -->
+        <section class="join-cta">
+            <h3>Ready to Join the Brotherhood?</h3>
+            <p>We're always looking for passionate players to join our ranks. Request access to our Discord to get
+                started.</p>
+            <a href="join.html" class="btn btn-primary">Request Discord Access</a>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">⚔️ VINDICTA</div>
+        <p>© 2026 Team Vindicta | Long Island, NY</p>
+        <p style="margin-top: 0.5rem;"><a href="../platform/"
+                style="color: var(--vindicta-gold); text-decoration: none;">Access the Platform →</a></p>
+    </footer>
+
+</body>
+
+</html>

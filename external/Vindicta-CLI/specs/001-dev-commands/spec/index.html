@@ -1,0 +1,1525 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://vindicta-platform.github.io/docs/external/Vindicta-CLI/specs/001-dev-commands/spec/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Feature Specification: Developer Commands for Platform Management - Vindicta Platform Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#feature-specification-developer-commands-for-platform-management" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="Vindicta Platform Docs" class="md-header__button md-logo" aria-label="Vindicta Platform Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Vindicta Platform Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Feature Specification: Developer Commands for Platform Management
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vindicta-platform/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vindicta-platform/docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../platform/getting-started/index.md" class="md-tabs__link">
+          
+  
+  
+  Platform
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../" class="md-tabs__link">
+          
+  
+  
+  Modules
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../WARScribe-Core/docs/" class="md-tabs__link">
+          
+  
+  
+  Components
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../platform/proposals/index.md" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Proposals
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../platform/specs/index.md" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Specs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../guidelines/writing-docs/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Guidelines
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../platform/adr/index.md" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ADRs
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Vindicta Platform Docs" class="md-nav__button md-logo" aria-label="Vindicta Platform Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Vindicta Platform Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vindicta-platform/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vindicta-platform/docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Platform
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../platform/getting-started/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../platform/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../platform/features/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Features
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modules
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modules
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Vindicta-API/docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Vindicta-Core/docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Vindicta-Portal/docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Portal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Components
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Components
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../WARScribe-Core/docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WarScribe Core
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../platform/proposals/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Proposals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../platform/specs/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../guidelines/writing-docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guidelines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../platform/adr/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADRs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#clarifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clarifications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Clarifications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#session-2026-02-07" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Session 2026-02-07
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#user-scenarios-testing-mandatory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Scenarios &amp; Testing (mandatory)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="User Scenarios &amp; Testing (mandatory)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user-story-1-new-developer-onboarding-priority-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Story 1 - New Developer Onboarding (Priority: P1)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-story-2-daily-workspace-synchronization-priority-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Story 2 - Daily Workspace Synchronization (Priority: P1)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-story-3-pre-commit-validation-priority-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Story 3 - Pre-Commit Validation (Priority: P1)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-story-4-workspace-health-monitoring-priority-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Story 4 - Workspace Health Monitoring (Priority: P2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-story-5-environment-troubleshooting-priority-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Story 5 - Environment Troubleshooting (Priority: P2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-story-6-selective-repository-setup-priority-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Story 6 - Selective Repository Setup (Priority: P3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-story-7-build-artifact-cleanup-priority-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Story 7 - Build Artifact Cleanup (Priority: P3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-story-8-workspace-configuration-management-priority-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Story 8 - Workspace Configuration Management (Priority: P3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edge-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Edge Cases
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements-mandatory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requirements (mandatory)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Requirements (mandatory)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functional-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functional Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-entities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Entities
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#success-criteria-mandatory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Criteria (mandatory)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Success Criteria (mandatory)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#measurable-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Measurable Outcomes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="feature-specification-developer-commands-for-platform-management">Feature Specification: Developer Commands for Platform Management</h1>
+<p><strong>Feature Branch</strong>: <code>001-dev-commands</code>
+<strong>Created</strong>: 2026-02-07
+<strong>Status</strong>: Draft
+<strong>Input</strong>: User description: "Developer commands for Vindicta Platform workspace management including init, sync, setup, status, validate, doctor, clean, and config operations"</p>
+<h2 id="clarifications">Clarifications</h2>
+<h3 id="session-2026-02-07">Session 2026-02-07</h3>
+<ul>
+<li>Q: What level of observability and logging should the CLI commands implement? → A: Structured logging - JSON logs to <code>.vindicta/logs/</code> directory + human-readable console output</li>
+<li>Q: How should the CLI handle GitHub authentication and credential management? → A: Delegate to <code>gh</code> CLI - Require <code>gh auth login</code> before running commands, use <code>gh</code> for all GitHub operations</li>
+<li>Q: How should the CLI handle the boundary between MCP server operations and direct CLI operations? → A: MCP-first CLI - CLI always uses MCP filesystem server for file operations when available</li>
+<li>Q: What retry strategy should be used for network failures? → A: Exponential backoff - 3 attempts with delays: 1s, 2s, 4s (total ~7s max wait)</li>
+<li>Q: What level of progress feedback should long-running operations provide? → A: Rich progress (spinners, progress bars, current operation name, ETA estimates) as default, with <code>--verbose</code> flag for real-time streaming output of every executed command</li>
+</ul>
+<h2 id="user-scenarios-testing-mandatory">User Scenarios &amp; Testing <em>(mandatory)</em></h2>
+<h3 id="user-story-1-new-developer-onboarding-priority-p1">User Story 1 - New Developer Onboarding (Priority: P1)</h3>
+<p>A new developer joins the Vindicta Platform team and needs to set up their local development environment with all 26 repositories, dependencies, and tooling configured correctly.</p>
+<p><strong>Why this priority</strong>: This is the most critical workflow as it directly impacts developer productivity and time-to-first-contribution. Without this, developers spend hours manually cloning repos and configuring environments.</p>
+<p><strong>Independent Test</strong>: Can be fully tested by running initialization commands on a clean machine and verifying all repositories are cloned, dependencies installed, and pre-commit hooks configured. Delivers immediate value by reducing onboarding time from hours to minutes.</p>
+<p><strong>Acceptance Scenarios</strong>:</p>
+<ol>
+<li><strong>Given</strong> a developer has a clean machine with Git and Python installed, <strong>When</strong> they run the initialization command with default settings, <strong>Then</strong> all 26 repositories are cloned to the workspace directory with correct folder structure</li>
+<li><strong>Given</strong> repositories are cloned, <strong>When</strong> the setup command completes, <strong>Then</strong> all Python virtual environments are created, Node.js dependencies are installed, and pre-commit hooks are configured</li>
+<li><strong>Given</strong> setup is complete, <strong>When</strong> the developer runs the diagnostic command, <strong>Then</strong> all required tools are detected with correct versions and workspace health is reported as "ready"</li>
+<li><strong>Given</strong> a developer wants only core repositories, <strong>When</strong> they initialize with tier filtering (P0 and P1 only), <strong>Then</strong> only the 7 core repositories are cloned and configured</li>
+</ol>
+<hr />
+<h3 id="user-story-2-daily-workspace-synchronization-priority-p1">User Story 2 - Daily Workspace Synchronization (Priority: P1)</h3>
+<p>A developer starts their workday and needs to synchronize all local repositories with the latest remote changes across the entire platform.</p>
+<p><strong>Why this priority</strong>: Daily sync is essential for maintaining workspace health and preventing merge conflicts. This is a daily workflow that impacts all developers.</p>
+<p><strong>Independent Test</strong>: Can be tested by creating test commits on remote branches, running sync commands, and verifying local repositories are updated. Delivers value by keeping workspace current with minimal manual effort.</p>
+<p><strong>Acceptance Scenarios</strong>:</p>
+<ol>
+<li><strong>Given</strong> multiple repositories have remote updates, <strong>When</strong> the developer runs the sync command, <strong>Then</strong> all repositories fetch latest changes and display ahead/behind status for each repo</li>
+<li><strong>Given</strong> a repository has uncommitted local changes, <strong>When</strong> sync runs, <strong>Then</strong> the repository is skipped with a warning message and the developer is notified of dirty state</li>
+<li><strong>Given</strong> all repositories are clean, <strong>When</strong> sync runs with auto-pull enabled, <strong>Then</strong> all repositories are updated to latest remote state and summary shows successful sync count</li>
+<li><strong>Given</strong> sync completes, <strong>When</strong> the developer views status, <strong>Then</strong> workspace health dashboard shows current branch, commit status, and any issues requiring attention</li>
+</ol>
+<hr />
+<h3 id="user-story-3-pre-commit-validation-priority-p1">User Story 3 - Pre-Commit Validation (Priority: P1)</h3>
+<p>A developer has made changes across multiple repositories and needs to validate that all changes comply with Platform Constitution requirements before creating pull requests.</p>
+<p><strong>Why this priority</strong>: Constitutional compliance is mandatory per Platform Constitution v1.0.0. This prevents CI failures and ensures quality gates are met before code review.</p>
+<p><strong>Independent Test</strong>: Can be tested by introducing violations (missing constitution files, broken markdown links, failing pre-commit hooks) and verifying validation detects and reports them. Delivers value by catching issues locally before PR creation.</p>
+<p><strong>Acceptance Scenarios</strong>:</p>
+<ol>
+<li><strong>Given</strong> a repository is missing Platform Constitution file, <strong>When</strong> validation runs, <strong>Then</strong> the issue is detected and reported with specific file path and remediation steps</li>
+<li><strong>Given</strong> markdown files contain broken links, <strong>When</strong> link validation runs, <strong>Then</strong> all broken links are identified with file locations and line numbers</li>
+<li><strong>Given</strong> pre-commit hooks would fail, <strong>When</strong> validation runs with auto-fix enabled, <strong>Then</strong> fixable issues are automatically corrected and remaining issues are reported</li>
+<li><strong>Given</strong> all validation checks pass, <strong>When</strong> validation completes, <strong>Then</strong> compliance score is reported as 100% and developer receives confirmation to proceed with PR creation</li>
+</ol>
+<hr />
+<h3 id="user-story-4-workspace-health-monitoring-priority-p2">User Story 4 - Workspace Health Monitoring (Priority: P2)</h3>
+<p>A developer needs to quickly assess the health of their entire workspace to identify repositories with issues, pending PRs, or failing CI checks.</p>
+<p><strong>Why this priority</strong>: Proactive health monitoring prevents issues from accumulating and helps developers maintain workspace hygiene. This is a periodic workflow (weekly/bi-weekly) rather than daily.</p>
+<p><strong>Independent Test</strong>: Can be tested by creating various repository states (dirty, ahead/behind, failing CI) and verifying status dashboard accurately reports all conditions. Delivers value by providing at-a-glance workspace overview.</p>
+<p><strong>Acceptance Scenarios</strong>:</p>
+<ol>
+<li><strong>Given</strong> workspace contains 26 repositories in various states, <strong>When</strong> status command runs, <strong>Then</strong> dashboard displays tier-grouped summary with health indicators for each repository</li>
+<li><strong>Given</strong> some repositories have failing CI checks, <strong>When</strong> status runs with detailed mode, <strong>Then</strong> CI status is queried and failures are highlighted with links to build logs</li>
+<li><strong>Given</strong> developer wants to focus on issues, <strong>When</strong> status runs with failing-only filter, <strong>Then</strong> only repositories with problems are displayed with specific issue details</li>
+<li><strong>Given</strong> status data is needed for reporting, <strong>When</strong> status runs with JSON output, <strong>Then</strong> structured data is exported with all repository metrics for external processing</li>
+</ol>
+<hr />
+<h3 id="user-story-5-environment-troubleshooting-priority-p2">User Story 5 - Environment Troubleshooting (Priority: P2)</h3>
+<p>A developer encounters issues with their local environment (missing tools, version mismatches, configuration problems) and needs diagnostic assistance.</p>
+<p><strong>Why this priority</strong>: Environment issues are common but not daily occurrences. Quick diagnosis reduces debugging time and helps developers self-service common problems.</p>
+<p><strong>Independent Test</strong>: Can be tested by removing required tools or using incorrect versions, then verifying diagnostics detect issues and provide remediation guidance. Delivers value by reducing support escalations.</p>
+<p><strong>Acceptance Scenarios</strong>:</p>
+<ol>
+<li><strong>Given</strong> required tools are missing or outdated, <strong>When</strong> diagnostic command runs, <strong>Then</strong> all tool versions are checked against requirements and missing/outdated tools are reported</li>
+<li><strong>Given</strong> workspace configuration is corrupted, <strong>When</strong> diagnostics run, <strong>Then</strong> configuration issues are identified and repair recommendations are provided</li>
+<li><strong>Given</strong> common issues are detected, <strong>When</strong> diagnostics run with auto-fix enabled, <strong>Then</strong> fixable problems are automatically resolved and summary of actions is displayed</li>
+<li><strong>Given</strong> diagnostics complete, <strong>When</strong> results are displayed, <strong>Then</strong> developer receives prioritized recommendations with specific commands to resolve each issue</li>
+</ol>
+<hr />
+<h3 id="user-story-6-selective-repository-setup-priority-p3">User Story 6 - Selective Repository Setup (Priority: P3)</h3>
+<p>A developer working on a specific feature needs to set up only relevant repositories rather than the entire 26-repository workspace.</p>
+<p><strong>Why this priority</strong>: Useful for focused work but not essential for general development. Most developers work across multiple repositories so full workspace is preferred.</p>
+<p><strong>Independent Test</strong>: Can be tested by initializing workspace with specific repository list and verifying only those repositories are cloned and configured. Delivers value for specialized workflows.</p>
+<p><strong>Acceptance Scenarios</strong>:</p>
+<ol>
+<li><strong>Given</strong> developer specifies repository names, <strong>When</strong> initialization runs, <strong>Then</strong> only specified repositories are cloned and configured</li>
+<li><strong>Given</strong> developer specifies tier level, <strong>When</strong> initialization runs, <strong>Then</strong> all repositories in specified tier are set up with correct dependencies</li>
+<li><strong>Given</strong> partial workspace exists, <strong>When</strong> setup runs for additional repositories, <strong>Then</strong> new repositories are added to existing workspace configuration</li>
+<li><strong>Given</strong> selective setup completes, <strong>When</strong> status runs, <strong>Then</strong> workspace configuration reflects partial setup and indicates which repositories are present</li>
+</ol>
+<hr />
+<h3 id="user-story-7-build-artifact-cleanup-priority-p3">User Story 7 - Build Artifact Cleanup (Priority: P3)</h3>
+<p>A developer needs to reclaim disk space by cleaning build artifacts, caches, and temporary files across all repositories.</p>
+<p><strong>Why this priority</strong>: Disk space management is periodic maintenance, not a daily workflow. Useful but not critical for core development tasks.</p>
+<p><strong>Independent Test</strong>: Can be tested by building projects to generate artifacts, running cleanup, and verifying artifacts are removed while source code remains intact. Delivers value by freeing disk space.</p>
+<p><strong>Acceptance Scenarios</strong>:</p>
+<ol>
+<li><strong>Given</strong> repositories contain build artifacts, <strong>When</strong> cleanup runs with dry-run mode, <strong>Then</strong> all cleanable files are identified and total disk space to be reclaimed is reported</li>
+<li><strong>Given</strong> cleanup targets Python artifacts, <strong>When</strong> cleanup runs, <strong>Then</strong> <code>__pycache__</code>, <code>.pytest_cache</code>, and <code>.venv</code> directories are removed from all Python repositories</li>
+<li><strong>Given</strong> cleanup targets Node.js artifacts, <strong>When</strong> cleanup runs, <strong>Then</strong> <code>node_modules</code>, <code>dist</code>, and <code>.next</code> directories are removed from all JavaScript repositories</li>
+<li><strong>Given</strong> cleanup completes, <strong>When</strong> summary is displayed, <strong>Then</strong> total disk space reclaimed is reported with breakdown by repository and artifact type</li>
+</ol>
+<hr />
+<h3 id="user-story-8-workspace-configuration-management-priority-p3">User Story 8 - Workspace Configuration Management (Priority: P3)</h3>
+<p>A developer needs to customize workspace behavior (parallel sync operations, auto-fix preferences, default tiers) to match their workflow preferences.</p>
+<p><strong>Why this priority</strong>: Configuration customization improves developer experience but has reasonable defaults. Most developers use default settings.</p>
+<p><strong>Independent Test</strong>: Can be tested by setting various configuration values and verifying they persist across command invocations. Delivers value by enabling workflow optimization.</p>
+<p><strong>Acceptance Scenarios</strong>:</p>
+<ol>
+<li><strong>Given</strong> developer wants faster sync, <strong>When</strong> they increase parallel sync setting to 8, <strong>Then</strong> subsequent sync operations process 8 repositories concurrently</li>
+<li><strong>Given</strong> developer prefers auto-fix for validation, <strong>When</strong> they enable auto-fix in configuration, <strong>Then</strong> validation commands automatically fix issues without requiring explicit flag</li>
+<li><strong>Given</strong> developer works primarily with P0/P1 tiers, <strong>When</strong> they set default tier preference, <strong>Then</strong> initialization commands default to those tiers unless overridden</li>
+<li><strong>Given</strong> configuration changes are made, <strong>When</strong> developer views configuration, <strong>Then</strong> all current settings are displayed with descriptions and current values</li>
+</ol>
+<hr />
+<h3 id="edge-cases">Edge Cases</h3>
+<ul>
+<li>What happens when a repository clone fails due to network issues during initialization?</li>
+<li>
+<p>System should continue with remaining repositories, report failures at end, and provide retry command for failed repos</p>
+</li>
+<li>
+<p>How does system handle repositories with uncommitted changes during sync?</p>
+</li>
+<li>
+<p>System skips pulling for dirty repositories, displays warning, and provides status of uncommitted files</p>
+</li>
+<li>
+<p>What happens when workspace configuration file is missing or corrupted?</p>
+</li>
+<li>
+<p>System attempts to reconstruct configuration from discovered repositories, warns user, and offers to regenerate configuration</p>
+</li>
+<li>
+<p>How does system behave when GitHub CLI is not installed or not authenticated?</p>
+</li>
+<li>
+<p>System detects missing <code>gh</code> command, reports error with installation instructions, and falls back to git-only operations where possible</p>
+</li>
+<li>
+<p>What happens when pre-commit hooks fail during validation?</p>
+</li>
+<li>
+<p>System reports specific hook failures with error messages, provides remediation guidance, and exits with non-zero code</p>
+</li>
+<li>
+<p>How does system handle repositories on non-default branches during sync?</p>
+</li>
+<li>
+<p>System reports current branch for each repository, warns if not on default branch, and skips auto-pull unless explicitly forced</p>
+</li>
+<li>
+<p>What happens when tier filtering produces empty repository list?</p>
+</li>
+<li>
+<p>System reports no repositories match criteria, displays available tiers, and exits without making changes</p>
+</li>
+<li>
+<p>How does system handle parallel operations when one repository hangs?</p>
+</li>
+<li>System implements timeout for parallel operations, reports hung repositories, and continues with remaining repos</li>
+</ul>
+<h2 id="requirements-mandatory">Requirements <em>(mandatory)</em></h2>
+<h3 id="functional-requirements">Functional Requirements</h3>
+<ul>
+<li><strong>FR-001</strong>: System MUST provide initialization command that clones specified repositories from GitHub organization</li>
+<li><strong>FR-002</strong>: System MUST support tier-based filtering (P0, P1, P2, P3) for repository selection during initialization</li>
+<li><strong>FR-003</strong>: System MUST create workspace configuration file (<code>.vindicta-workspace.yml</code>) containing repository registry and settings</li>
+<li><strong>FR-004</strong>: System MUST detect repository type (Python, Node.js, or mixed) and install appropriate dependencies</li>
+<li><strong>FR-005</strong>: System MUST install pre-commit hooks across all repositories during setup</li>
+<li><strong>FR-006</strong>: System MUST synchronize all repositories with remote state, fetching latest changes and reporting ahead/behind status</li>
+<li><strong>FR-007</strong>: System MUST skip pulling for repositories with uncommitted changes and report dirty state</li>
+<li><strong>FR-008</strong>: System MUST support parallel synchronization with configurable concurrency level</li>
+<li><strong>FR-009</strong>: System MUST display workspace health dashboard showing git status, CI status, and PR counts for each repository</li>
+<li><strong>FR-010</strong>: System MUST validate Platform Constitution v1.0.0 presence in all repositories</li>
+<li><strong>FR-011</strong>: System MUST validate <code>.antigravity/</code> context artifacts (ARCHITECTURE.md, CONSTRAINTS.md) exist in repositories</li>
+<li><strong>FR-012</strong>: System MUST validate markdown link integrity across all documentation files</li>
+<li><strong>FR-013</strong>: System MUST execute pre-commit hooks and report validation failures with specific error messages</li>
+<li><strong>FR-014</strong>: System MUST support auto-fix mode for validation issues where automated remediation is possible</li>
+<li><strong>FR-015</strong>: System MUST detect and report versions of required tools (git, gh, python, uv, node)</li>
+<li><strong>FR-016</strong>: System MUST identify workspace configuration issues and provide remediation recommendations</li>
+<li><strong>FR-017</strong>: System MUST clean build artifacts (Python: <code>__pycache__</code>, <code>.pytest_cache</code>, <code>.venv</code>; Node.js: <code>node_modules</code>, <code>dist</code>, <code>.next</code>)</li>
+<li><strong>FR-018</strong>: System MUST report disk space reclaimed during cleanup operations</li>
+<li><strong>FR-019</strong>: System MUST persist configuration settings in workspace configuration file</li>
+<li><strong>FR-020</strong>: System MUST support both workspace-local and global configuration scopes</li>
+<li><strong>FR-021</strong>: System MUST use GitHub CLI (<code>gh</code>) internally for repository cloning and PR/CI status queries</li>
+<li><strong>FR-022</strong>: System MUST use MCP filesystem server for file operations when available, falling back to direct operations only when MCP is unavailable</li>
+<li><strong>FR-023</strong>: System MUST exit with non-zero code when validation failures or critical errors occur</li>
+<li><strong>FR-024</strong>: System MUST support JSON output format for programmatic consumption of status and diagnostic data</li>
+<li><strong>FR-025</strong>: System MUST handle network failures gracefully with exponential backoff retry (3 attempts: 1s, 2s, 4s delays)</li>
+<li><strong>FR-026</strong>: System MUST write structured JSON logs to <code>.vindicta/logs/</code> directory for all operations</li>
+<li><strong>FR-027</strong>: System MUST include timestamps, command name, arguments, execution duration, and outcome in log entries</li>
+<li><strong>FR-028</strong>: System MUST display rich progress indicators (spinners, progress bars, current operation name, ETA estimates) as default for long-running operations</li>
+<li><strong>FR-029</strong>: System MUST implement log rotation to prevent unbounded disk usage (retain last 30 days or 100MB)</li>
+<li><strong>FR-030</strong>: System MUST require <code>gh</code> CLI authentication (<code>gh auth status</code> succeeds) before executing GitHub operations</li>
+<li><strong>FR-031</strong>: System MUST use <code>gh</code> CLI for all GitHub operations (cloning, PR queries, CI status) rather than implementing separate authentication</li>
+<li><strong>FR-032</strong>: System MUST detect MCP filesystem server availability at startup and gracefully fall back to direct file operations if unavailable</li>
+<li><strong>FR-033</strong>: System MUST log each retry attempt with attempt number, delay duration, and failure reason</li>
+<li><strong>FR-034</strong>: System MUST support <code>--verbose</code> flag to stream real-time output of every executed command (git clone, npm install, etc.) instead of progress indicators</li>
+</ul>
+<h3 id="key-entities">Key Entities</h3>
+<ul>
+<li>
+<p><strong>Workspace</strong>: Represents the root directory containing all Vindicta Platform repositories. Contains workspace configuration file, repository registry, and settings for sync/validation behavior.</p>
+</li>
+<li>
+<p><strong>Repository</strong>: Individual Git repository within the workspace. Has attributes: name, tier (P0/P1/P2/P3), type (Python/Node.js/mixed), path, git status (branch, ahead/behind, dirty), CI status, and PR count.</p>
+</li>
+<li>
+<p><strong>Workspace Configuration</strong>: Persistent settings stored in <code>.vindicta-workspace.yml</code>. Contains repository registry, sync preferences (parallel count, auto-pull), validation preferences (auto-fix, constitution check), and setup preferences (install hooks, create env files).</p>
+</li>
+<li>
+<p><strong>Validation Result</strong>: Outcome of compliance checks. Contains pass/fail status for constitution presence, context artifacts, link integrity, and pre-commit hooks. Includes specific error messages and remediation guidance.</p>
+</li>
+<li>
+<p><strong>Health Status</strong>: Snapshot of workspace health. Contains per-repository metrics (git status, CI status, PR count), aggregate statistics (total repos, healthy count, issue count), and tier-grouped summaries.</p>
+</li>
+</ul>
+<h2 id="success-criteria-mandatory">Success Criteria <em>(mandatory)</em></h2>
+<h3 id="measurable-outcomes">Measurable Outcomes</h3>
+<ul>
+<li><strong>SC-001</strong>: New developers can initialize complete workspace (all 26 repositories) in under 10 minutes on standard development machine</li>
+<li><strong>SC-002</strong>: Workspace synchronization completes for all repositories in under 2 minutes with default parallel settings</li>
+<li><strong>SC-003</strong>: Validation checks identify 100% of Platform Constitution compliance violations with zero false positives</li>
+<li><strong>SC-004</strong>: Developers can diagnose and resolve 80% of common environment issues using diagnostic command without external support</li>
+<li><strong>SC-005</strong>: Workspace health status displays current state for all repositories in under 5 seconds</li>
+<li><strong>SC-006</strong>: Cleanup operations reclaim disk space without removing any source code or configuration files (100% accuracy)</li>
+<li><strong>SC-007</strong>: 90% of developers successfully complete onboarding workflow on first attempt without manual intervention</li>
+<li><strong>SC-008</strong>: Validation auto-fix resolves 70% of common compliance issues without manual correction</li>
+<li><strong>SC-009</strong>: System handles network failures gracefully with automatic retry for at least 3 attempts before reporting failure</li>
+<li><strong>SC-010</strong>: Configuration changes persist correctly across command invocations with 100% reliability</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "content.code.copy"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

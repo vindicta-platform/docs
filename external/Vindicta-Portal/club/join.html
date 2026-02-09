@@ -1,0 +1,496 @@
+<!DOCTYPE HTML>
+<html lang="en" class="club-theme">
+
+<head>
+    <title>Join Team Vindicta</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description"
+        content="Join Team Vindicta - Request access to our Discord community and become part of Long Island's premier Warhammer 40K club." />
+
+    <!-- Design System -->
+    <link href="../assets/css/design-system.css" rel="stylesheet" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .club-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: var(--z-sticky);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .club-nav .logo {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--vindicta-gold);
+            text-decoration: none;
+        }
+
+        .club-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .club-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .club-nav a:hover,
+        .club-nav a.active {
+            color: var(--vindicta-gold);
+        }
+
+        /* Main Content */
+        .join-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            min-height: 100vh;
+            align-items: center;
+        }
+
+        /* Info Section */
+        .info-section h1 {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, var(--vindicta-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .info-section p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .benefits-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .benefits-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .benefits-list .icon {
+            font-size: 1.5rem;
+        }
+
+        .discord-info {
+            background: rgba(88, 101, 242, 0.1);
+            border: 1px solid rgba(88, 101, 242, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .discord-info h4 {
+            color: #5865F2;
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .discord-info p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* Form Section */
+        .form-section {
+            background: rgba(30, 30, 50, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2.5rem;
+        }
+
+        .form-section h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--vindicta-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-section .subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: rgba(15, 15, 25, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23888' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+            cursor: pointer;
+        }
+
+        .form-group select option {
+            background: #1a1a2e;
+            color: var(--text-primary);
+            padding: 0.5rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--vindicta-gold);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--vindicta-gold) 0%, #FFA500 100%);
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--vindicta-gold);
+            margin-bottom: 1rem;
+        }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .club-nav {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                padding: 0.75rem 1rem;
+                gap: 0.5rem;
+            }
+
+            .club-nav .logo {
+                font-size: 1.4rem;
+                width: 100%;
+                text-align: center;
+                display: block;
+            }
+
+            .club-nav ul {
+                display: none;
+            }
+
+            .join-content {
+                grid-template-columns: 1fr;
+                padding: 5rem 1.5rem 3rem;
+                gap: 2rem;
+            }
+
+            .info-section {
+                text-align: center;
+            }
+
+            .info-section h1 {
+                font-size: 2rem;
+            }
+
+            .info-section p {
+                font-size: 1rem;
+            }
+
+            .benefits-list {
+                text-align: left;
+                padding-left: 0;
+            }
+
+            .benefits-list li {
+                font-size: 0.95rem;
+                padding-left: 2rem;
+                text-indent: 0;
+            }
+
+            .form-section {
+                padding: 1.5rem;
+            }
+
+            .form-section h2 {
+                font-size: 1.3rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .discord-info {
+                text-align: center;
+            }
+        }
+
+        /* Extra small mobile */
+        @media (max-width: 400px) {
+            .club-nav .logo {
+                font-size: 1.2rem;
+            }
+
+            .info-section h1 {
+                font-size: 1.75rem;
+            }
+
+            .join-content {
+                padding: 4.5rem 1rem 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="club-nav">
+        <a class="logo" href="index.html">⚔️ VINDICTA</a>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="partners.html">Partners</a></li>
+            <li><a href="join.html" class="active">Join Us</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="join-content">
+
+        <!-- Info Section -->
+        <div class="info-section">
+            <h1>Join the Brotherhood</h1>
+            <p>Ready to take your Warhammer 40K game to the next level? Team Vindicta is always looking for passionate
+                players who share our competitive spirit and love for the hobby.</p>
+
+            <ul class="benefits-list">
+                <li>
+                    <span class="icon">⚔️</span>
+                    <span>Access to competitive practice games and coaching</span>
+                </li>
+                <li>
+                    <span class="icon">📅</span>
+                    <span>Priority registration for events and tournaments</span>
+                </li>
+                <li>
+                    <span class="icon">💬</span>
+                    <span>Active Discord community for strategy discussion</span>
+                </li>
+                <li>
+                    <span class="icon">🎨</span>
+                    <span>Hobby sessions and painting workshops</span>
+                </li>
+                <li>
+                    <span class="icon">🤝</span>
+                    <span>Brotherhood and camaraderie on and off the table</span>
+                </li>
+            </ul>
+
+            <div class="discord-info">
+                <h4>💬 Why Discord?</h4>
+                <p>Our Discord server is the heart of Team Vindicta. It's where we coordinate games, share lists,
+                    discuss tactics, and build community. Access is granted after your request is reviewed.</p>
+            </div>
+        </div>
+
+        <!-- Form Section -->
+        <div class="form-section">
+            <h2>Request Access</h2>
+            <p class="subtitle">Fill out the form and we'll review your request</p>
+
+            <form action="https://formsubmit.co/vindicta40k@gmail.com" method="POST">
+                <!-- Hidden fields for FormSubmit -->
+                <input type="hidden" name="_subject" value="New Vindicta Discord Request">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Your Name *</label>
+                        <input type="text" id="name" name="name" required placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required placeholder="your@email.com">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="faction">Primary Faction</label>
+                        <select id="faction" name="faction">
+                            <option value="">Select your faction...</option>
+                            <option value="Space Marines">Space Marines</option>
+                            <option value="Chaos Space Marines">Chaos Space Marines</option>
+                            <option value="Aeldari">Aeldari</option>
+                            <option value="Drukhari">Drukhari</option>
+                            <option value="Orks">Orks</option>
+                            <option value="Tyranids">Tyranids</option>
+                            <option value="Necrons">Necrons</option>
+                            <option value="T'au Empire">T'au Empire</option>
+                            <option value="Astra Militarum">Astra Militarum</option>
+                            <option value="Adeptus Custodes">Adeptus Custodes</option>
+                            <option value="Grey Knights">Grey Knights</option>
+                            <option value="Thousand Sons">Thousand Sons</option>
+                            <option value="Death Guard">Death Guard</option>
+                            <option value="World Eaters">World Eaters</option>
+                            <option value="Agents of the Imperium">Agents of the Imperium</option>
+                            <option value="Chaos Daemons">Chaos Daemons</option>
+                            <option value="Chaos Knights">Chaos Knights</option>
+                            <option value="Imperial Knights">Imperial Knights</option>
+                            <option value="Leagues of Votann">Leagues of Votann</option>
+                            <option value="Genestealer Cults">Genestealer Cults</option>
+                            <option value="Multiple/Undecided">Multiple/Undecided</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="experience">Experience Level</label>
+                        <select id="experience" name="experience">
+                            <option value="">Select your level...</option>
+                            <option value="New Player">New Player (< 1 year)</option>
+                            <option value="Casual">Casual (1-3 years)</option>
+                            <option value="Competitive">Competitive (3+ years)</option>
+                            <option value="Tournament Regular">Tournament Regular</option>
+                            <option value="GT/Major Winner">GT/Major Winner</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Tell us about yourself</label>
+                    <textarea id="message" name="message"
+                        placeholder="What brings you to Vindicta? What are your 40K goals?"></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit Request</button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">⚔️ VINDICTA</div>
+        <p>© 2026 Team Vindicta | Long Island, NY</p>
+        <p style="margin-top: 0.5rem;"><a href="../platform/"
+                style="color: var(--vindicta-gold); text-decoration: none;">Access the Platform →</a></p>
+    </footer>
+
+</body>
+
+</html>

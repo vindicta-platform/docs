@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en" class="platform-theme scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Vindicta Platform - Transform games into tactical data clusters with AI-backed prediction and competitive tools.">
+    <title>Vindicta Platform | The Future of Tabletop Wargaming</title>
+
+    <!-- Design System -->
+    <link href="../assets/css/design-system.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+    <style>
+        body {
+            font-family: var(--font-display);
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1520 25%, #12121a 50%, #0d1a1a 75%, #0a0a0f 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        /* Grid Background */
+        .grid-bg {
+            position: fixed;
+            top: -60px;
+            left: -60px;
+            right: -60px;
+            bottom: -60px;
+            background-image:
+                linear-gradient(rgba(0, 212, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+
+            100% {
+                transform: translateY(60px) translateX(60px);
+            }
+        }
+
+        /* Glow Orbs */
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .glow-orb-1 {
+            width: 600px;
+            height: 600px;
+            background: var(--accent-dim);
+            top: -200px;
+            right: -200px;
+        }
+
+        .glow-orb-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--vindicta-gold-dim);
+            bottom: 200px;
+            left: -150px;
+            animation-delay: -4s;
+        }
+
+        /* Navigation */
+        .platform-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 15, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .platform-nav .logo {
+            font-weight: 900;
+            font-size: 1.4rem;
+            color: var(--accent);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .platform-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .platform-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .platform-nav a:hover {
+            color: var(--accent);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent-dim);
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--accent);
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 900;
+            line-height: 0.95;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            letter-spacing: -3px;
+        }
+
+        .hero h1 .line-1 {
+            display: block;
+            color: #fff;
+        }
+
+        .hero h1 .line-2 {
+            display: block;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--vindicta-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+
+        .hero p {
+            font-family: var(--font-body);
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-cyber {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-cyber-primary {
+            background: linear-gradient(135deg, var(--accent) 0%, #0099cc 100%);
+            color: #000;
+            border: none;
+        }
+
+        .btn-cyber-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.4);
+        }
+
+        .btn-cyber-outline {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-cyber-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Features */
+        .features {
+            padding: 6rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(18, 18, 26, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .feature-card.locked:hover {
+            transform: none;
+            border-color: var(--border-color);
+            box-shadow: none;
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--accent-dim);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover .feature-icon {
+            background: var(--accent);
+        }
+
+        .feature-card:hover .feature-icon svg {
+            stroke: #000;
+        }
+
+        .feature-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--accent);
+            transition: stroke 0.3s;
+        }
+
+        .feature-badge {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid;
+        }
+
+        .feature-badge.active {
+            color: #10b981;
+            border-color: rgba(16, 185, 129, 0.3);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .feature-badge.restricted {
+            color: var(--vindicta-gold);
+            border-color: rgba(255, 215, 0, 0.2);
+            background: rgba(255, 215, 0, 0.05);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.75rem;
+            color: #fff;
+        }
+
+        .feature-card p {
+            font-family: var(--font-body);
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Tech Stack Section */
+        .tech-section {
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .tech-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            opacity: 0.5;
+        }
+
+        .tech-stack span {
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .platform-footer {
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            position: relative;
+            z-index: 1;
+        }
+
+        .platform-footer p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .platform-footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .platform-nav ul {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+                letter-spacing: -1px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        // Immediate check to satisfy tests and avoid flicker
+        (function () {
+            if (localStorage.getItem('vindicta_beta') === 'false') {
+                document.documentElement.classList.add('hide-features');
+                window.addEventListener('DOMContentLoaded', () => {
+                    document.querySelectorAll('[data-feature]').forEach(el => el.remove());
+                });
+            }
+        })();
+    </script>
+    <style>
+        .hide-features [data-feature] {
+            display: none !important;
+        }
+    </style>
+    <header>
+        <!-- Animated Background -->
+        <div class="grid-bg"></div>
+        <div class="glow-orb glow-orb-1"></div>
+        <div class="glow-orb glow-orb-2"></div>
+
+        <!-- Navigation -->
+        <nav class="platform-nav">
+            <a class="logo" href="index.html">◆ VINDICTA</a>
+            <ul>
+                <li><a href="index.html">Platform</a></li>
+                <li data-feature="new_dashboard"><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="warscribe.html">WARScribe</a></li>
+                <li><a href="../club/">Club</a></li>
+            </ul>
+            <button class="mobile-nav-toggle" aria-label="Toggle Menu">☰</button>
+
+            <!-- Mobile Menu Overlay -->
+            <div class="mobile-nav-overlay">
+                <ul class="mobile-nav-links">
+                    <li><a href="index.html">Platform</a></li>
+                    <li data-feature="new_dashboard"><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="warscribe.html">WARScribe</a></li>
+                    <li><a href="../club/">Club</a></li>
+                </ul>
+                <button class="mobile-nav-toggle" style="position: absolute; top: 1rem; right: 2rem;"
+                    aria-label="Close Menu">✕</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <main>
+        <section class="hero">
+            <span class="hero-badge">Platform v2.0 Active</span>
+            <h1>
+                <span class="line-1">Strategy Over</span>
+                <span class="line-2">Administration.</span>
+            </h1>
+            <p>Transform games into tactical data clusters. Streamline battles with AI-backed prediction and an
+                immutable
+                financial ledger.</p>
+            <div class="hero-buttons">
+                <a href="dashboard.html" class="btn-cyber btn-cyber-primary" data-feature="new_dashboard">Enter
+                    Dashboard</a>
+                <a href="#features" class="btn-cyber btn-cyber-outline">Explore Systems</a>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <h2 class="sr-only">Platform Systems</h2>
+            <div class="features-grid">
+
+                <!-- WARScribe - Active -->
+                <a href="warscribe.html" class="feature-card">
+                    <span class="feature-badge active">Active</span>
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <h3>WARScribe</h3>
+                    <p>Standardized notation for battle logs. Convert analog play into structured digital truth.</p>
+                </a>
+
+                <!-- Dice Engine - Active -->
+                <a href="#" class="feature-card">
+                    <span class="feature-badge active">Active</span>
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                        </svg>
+                    </div>
+                    <h3>Dice Engine</h3>
+                    <p>Casino-grade CSPRNG with entropy proofs. Every roll is auditable, every outcome is fair.</p>
+                </a>
+
+                <!-- GAS Tank - Restricted -->
+                <div class="feature-card locked">
+                    <span class="feature-badge restricted">Restricted</span>
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                    <h3>GAS Tank</h3>
+                    <p>Managed operational funds for high-intensity API processing. Undergoing calibration.</p>
+                </div>
+
+                <!-- Meta-Oracle - Restricted -->
+                <div class="feature-card locked">
+                    <span class="feature-badge restricted">Restricted</span>
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                    </div>
+                    <h3>Meta-Oracle</h3>
+                    <p>Predictive adversarial engine. The ultimate training opponent. Undergoing ritual cleansing.</p>
+                </div>
+
+                <!-- Economy Engine - Restricted -->
+                <div class="feature-card locked">
+                    <span class="feature-badge restricted">Restricted</span>
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3>Economy Engine</h3>
+                    <p>Atomic ledger with double-entry accounting. Track resources with financial precision.</p>
+                </div>
+
+                <!-- Arbiter - Restricted -->
+                <div class="feature-card locked">
+                    <span class="feature-badge restricted">Restricted</span>
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+                        </svg>
+                    </div>
+                    <h3>Arbiter</h3>
+                    <p>Rules arbitration and dispute resolution. AI-backed judgment for edge cases.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Tech Stack -->
+        <section class="tech-section">
+            <p class="tech-label">Built With</p>
+            <div class="tech-stack">
+                <span>Python 3.12</span>
+                <span>FastAPI</span>
+                <span>SQLite</span>
+                <span>Firebase</span>
+                <span>GCP Free Tier</span>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="platform-footer">
+        <p>© 2026 Vindicta Platform | <a href="../club/">Visit the Club</a></p>
+    </footer>
+
+    <script type="module">
+        import { remoteConfig, analytics } from '../assets/js/firebase-config.js';
+        import { REMOTE_CONFIG_DEFAULTS } from '../assets/js/remote-config.defaults.js';
+        import { FeatureFlagService } from '../assets/js/remote-config.js';
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const flags = new FeatureFlagService(remoteConfig, REMOTE_CONFIG_DEFAULTS, analytics);
+            await flags.initialize();
+            window.vindictaFlags = flags;
+            window.vindictaFlags = flags;
+            console.log("Vindicta Platform: Remote Config Initialized");
+
+            // Mobile Menu Logic
+            const mobileToggle = document.querySelectorAll('.mobile-nav-toggle');
+            const mobileOverlay = document.querySelector('.mobile-nav-overlay');
+
+            mobileToggle.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    mobileOverlay.classList.toggle('active');
+                });
+            });
+
+            // Close mobile menu when clicking a link
+            const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileOverlay.classList.remove('active');
+                });
+            });
+
+            // Example Feature Toggle: New Dashboard
+            const isDashboardEnabled = flags.isFeatureEnabled('new_dashboard') || localStorage.getItem('vindicta_beta') === 'true';
+            const dashboardElements = document.querySelectorAll('[data-feature="new_dashboard"]');
+
+            dashboardElements.forEach(el => {
+                if (isDashboardEnabled) {
+                    el.classList.remove('hidden');
+                } else {
+                    el.remove(); // Remove to satisfy 'toHaveCount(0)' tests
+                }
+            });
+
+            // Example Configuration Value: Upload Limit
+            const uploadLimit = flags.getNumber('conf_upload_limit_mb');
+            console.log(`Vindicta Platform: Maximum upload limit is ${uploadLimit}MB`);
+
+            // Example UI Variant: CTA Button
+            const ctaVariant = flags.getString('ui_cta_button_variant');
+            const ctaButtons = document.querySelectorAll('.btn-cyber-primary');
+
+            ctaButtons.forEach(btn => {
+                if (ctaVariant === 'red') {
+                    btn.style.background = 'linear-gradient(135deg, #e94560 0%, #a21b31 100%)';
+                    btn.style.boxShadow = '0 10px 40px rgba(233, 69, 96, 0.4)';
+                } else if (ctaVariant === 'gold') {
+                    btn.style.background = 'var(--vindicta-gold)';
+                    btn.style.boxShadow = '0 10px 40px rgba(255, 215, 0, 0.4)';
+                    btn.style.color = '#000';
+                }
+            });
+
+            document.dispatchEvent(new CustomEvent('vindicta:flags:ready', { detail: flags }));
+
+            // Dev Override Panel (localhost only)
+            if (location.hostname === 'localhost') {
+                import('../assets/js/remote-config-overrides.js').then(module => {
+                    module.initOverridePanel(flags);
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

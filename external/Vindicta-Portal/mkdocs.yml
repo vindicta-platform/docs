@@ -1,0 +1,19 @@
+site_name: Vindicta Portal
+site_description: Web portal for the Vindicta Platform
+site_url: https://vindicta-platform.github.io/Vindicta-Portal/
+
+repo_name: vindicta-platform/Vindicta-Portal
+repo_url: https://github.com/vindicta-platform/Vindicta-Portal
+
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: amber
+    accent: amber
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Architecture: architecture.md
+  - Contributing: contributing.md

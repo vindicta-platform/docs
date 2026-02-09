@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Grade your army list using Vindicta's Meta-Oracle AI. Get instant analysis, matchup predictions, and optimization recommendations.">
+    <title>List Grader | Vindicta Platform</title>
+
+    <!-- Design System -->
+    <link rel="stylesheet" href="../assets/css/design-system.css">
+    <link rel="stylesheet" href="css/grader.css">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body.flags-loading .grader-main {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body class="flags-loading">
+    <!-- Navigation -->
+    <nav class="platform-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">⚔️ VINDICTA</a>
+            <div class="nav-links">
+                <a href="index.html">Platform</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="grader.html" class="active">List Grader</a>
+                <a href="warscribe.html">WARScribe</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="grader-main">
+        <div class="container">
+            <!-- Page Header -->
+            <header class="page-header">
+                <h1>📊 List <span class="gold">Grader</span></h1>
+                <p class="subtitle">Get AI-powered analysis of your army list from our Meta-Oracle engine</p>
+            </header>
+
+            <!-- Grader Form -->
+            <form id="grader-form" class="grader-form">
+                <div class="grader-input-area">
+                    <label for="list-input" class="input-label">
+                        Paste your army list below
+                    </label>
+                    <textarea id="list-input" class="grader-textarea"
+                        placeholder="++ Battalion Detachment ++&#10;&#10;Space Marines [2000 pts]&#10;&#10;HQ:&#10;Captain in Gravis Armour [105 pts]&#10;Librarian [70 pts]&#10;&#10;Troops:&#10;Intercessor Squad x10 [180 pts]&#10;..."
+                        rows="12" spellcheck="false"></textarea>
+                    <div id="char-count" class="char-count">0 characters</div>
+
+                    <!-- File Upload -->
+                    <div class="file-upload-area">
+                        <label class="file-input-label">
+                            📁 Upload .ros / .xml file
+                            <input type="file" id="file-input" accept=".ros,.rosz,.xml,.txt">
+                        </label>
+                        <span class="file-hint">Or drag and drop a BattleScribe export</span>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="button-group">
+                    <button type="submit" id="submit-btn" class="grader-submit-btn">
+                        ⚡ Grade My List
+                    </button>
+                    <button type="button" id="clear-btn" class="grader-clear-btn">
+                        Clear
+                    </button>
+                </div>
+            </form>
+
+            <!-- Error State -->
+            <div id="error-state" class="error-state" style="display: none;"></div>
+
+            <!-- Loading State -->
+            <div id="loading-state" class="loading-state" style="display: none;">
+                <div class="loading-spinner"></div>
+                <span class="loading-text">Analyzing list with Meta-Oracle...</span>
+            </div>
+
+            <!-- Results Panel -->
+            <section id="results-panel" class="results-panel" style="display: none;">
+                <div id="grade-result"></div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="platform-footer">
+        <p>© 2026 Vindicta Platform | <a href="../club/">Visit the Club</a></p>
+    </footer>
+
+    <!-- Firebase Remote Config Initialization -->
+    <script type="module">
+        import { remoteConfig, analytics } from '../assets/js/firebase-config.js';
+        import { REMOTE_CONFIG_DEFAULTS } from '../assets/js/remote-config.defaults.js';
+        import { FeatureFlagService } from '../assets/js/remote-config.js';
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const flags = new FeatureFlagService(remoteConfig, REMOTE_CONFIG_DEFAULTS, analytics);
+                await flags.initialize();
+                window.vindictaFlags = flags;
+            } catch (e) {
+                console.warn('Feature flags unavailable:', e);
+                window.vindictaFlags = {
+                    getValue: (key) => {
+                        // Default values for grader
+                        if (key === 'FEATURE_LIST_GRADER') return true;
+                        if (key === 'GRADER_USE_MOCK_API') return true;
+                        return undefined;
+                    }
+                };
+            }
+            document.body.classList.remove('flags-loading');
+            document.dispatchEvent(new CustomEvent('vindicta:flags:ready', { detail: window.vindictaFlags }));
+        });
+    </script>
+
+    <!-- Grader Controller -->
+    <script type="module" src="js/grader.js"></script>
+</body>
+
+</html>

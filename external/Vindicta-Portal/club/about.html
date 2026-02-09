@@ -1,0 +1,460 @@
+<!DOCTYPE HTML>
+<html lang="en" class="club-theme">
+
+<head>
+    <title>About Us | Team Vindicta</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description"
+        content="Learn about Team Vindicta - our origins, mission, and what drives us as Long Island's premier Warhammer 40K club." />
+
+    <!-- Design System -->
+    <link href="../assets/css/design-system.css" rel="stylesheet" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .club-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: var(--z-sticky);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .club-nav .logo {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--vindicta-gold);
+            text-decoration: none;
+        }
+
+        .club-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .club-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .club-nav a:hover,
+        .club-nav a.active {
+            color: var(--vindicta-gold);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 12rem 2rem 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 30% 30%, rgba(233, 69, 96, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 70%, rgba(255, 215, 0, 0.08) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, var(--vindicta-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Content Sections */
+        .content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem 6rem;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title h2 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--vindicta-gold);
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--border-color), transparent);
+        }
+
+        .section p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Values Grid */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .value-card {
+            background: rgba(30, 30, 50, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            border-color: var(--vindicta-gold);
+            transform: translateY(-5px);
+        }
+
+        .value-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .value-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .value-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin-top: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: var(--vindicta-gold);
+            border-radius: 50%;
+            transform: translateX(-5px);
+        }
+
+        .timeline-year {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--vindicta-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item p {
+            margin: 0;
+        }
+
+        /* Quote Block */
+        .quote-block {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(233, 69, 96, 0.05) 100%);
+            border-left: 3px solid var(--vindicta-gold);
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .quote-block p {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .quote-block cite {
+            display: block;
+            margin-top: 1rem;
+            color: var(--vindicta-gold);
+            font-style: normal;
+            font-weight: 600;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: rgba(22, 33, 62, 0.3);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .cta-section h3 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .cta-section p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--vindicta-gold);
+            margin-bottom: 1rem;
+        }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .club-nav {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+
+            .club-nav .logo {
+                width: 100%;
+                text-align: center;
+            }
+
+            .club-nav ul {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="club-nav">
+        <a class="logo" href="index.html">⚔️ VINDICTA</a>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html" class="active">About</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="partners.html">Partners</a></li>
+            <li><a href="join.html">Join Us</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>About Team Vindicta</h1>
+        <p>Born from a shared passion for competitive Warhammer 40,000, we are a brotherhood of players dedicated to
+            excellence, sportsmanship, and growing the community.</p>
+    </section>
+
+    <!-- Content -->
+    <div class="content">
+
+        <!-- Origins Section -->
+        <section class="section">
+            <div class="section-title">
+                <h2>🏛️ Our Origins</h2>
+            </div>
+            <p>Team Vindicta was founded in 2020 during the COVID-19 pandemic, when a group of Long Island Warhammer
+                enthusiasts connected over their shared love of competitive play. What started as casual Tabletop
+                Simulator sessions evolved into something greater—a team with a mission.</p>
+            <p>The name "Vindicta" comes from the Latin word for vengeance, reflecting our competitive spirit and
+                determination to dominate the tabletop battlefield. But vengeance isn't just about winning—it's about
+                redemption, improvement, and always coming back stronger.</p>
+
+            <div class="quote-block">
+                <p>"In the darkness of the far future, there is only war. But among brothers, there is victory."</p>
+                <cite>— Team Vindicta Creed</cite>
+            </div>
+        </section>
+
+        <!-- Mission Section -->
+        <section class="section">
+            <div class="section-title">
+                <h2>🎯 Our Mission</h2>
+            </div>
+            <p>We exist to elevate competitive Warhammer 40,000 on Long Island and beyond. Our goals are simple:</p>
+
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">⚔️</div>
+                    <h3>Compete</h3>
+                    <p>Represent Long Island at the highest levels of competitive play</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">📈</div>
+                    <h3>Improve</h3>
+                    <p>Constant growth through practice, analysis, and honest feedback</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h3>Community</h3>
+                    <p>Build a welcoming environment for players of all skill levels</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🎨</div>
+                    <h3>Hobby</h3>
+                    <p>Celebrate the art of painting, converting, and army building</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- History Section -->
+        <section class="section">
+            <div class="section-title">
+                <h2>📜 Our Journey</h2>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">2020</div>
+                    <p>Founded during the pandemic. First team members connect via Tabletop Simulator and Discord.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2021</div>
+                    <p>First in-person meetups as restrictions ease. Team expands to 10+ active members.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2022</div>
+                    <p>Launched monthly RTT events. Vindicta members compete at major GTs.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2023</div>
+                    <p>Established partnerships with local game stores and content creators.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2025</div>
+                    <p>Began development of the Vindicta Platform—AI-powered competitive tools.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2026</div>
+                    <p>Vindicta Portal launches. The future of tabletop wargaming begins.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h3>Join the Brotherhood</h3>
+            <p>Ready to take your game to the next level? We're always looking for passionate players.</p>
+            <a href="join.html" class="btn btn-primary">Request Discord Access</a>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">⚔️ VINDICTA</div>
+        <p>© 2026 Team Vindicta | Long Island, NY</p>
+        <p style="margin-top: 0.5rem;"><a href="../platform/"
+                style="color: var(--vindicta-gold); text-decoration: none;">Access the Platform →</a></p>
+    </footer>
+
+</body>
+
+</html>

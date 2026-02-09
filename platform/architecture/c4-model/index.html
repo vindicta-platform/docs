@@ -1,0 +1,1365 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://vindicta-platform.github.io/docs/platform/architecture/c4-model/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>C4 System Architecture - Vindicta Platform Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#c4-system-architecture" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Vindicta Platform Docs" class="md-header__button md-logo" aria-label="Vindicta Platform Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Vindicta Platform Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              C4 System Architecture
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vindicta-platform/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vindicta-platform/docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../getting-started/index.md" class="md-tabs__link">
+          
+  
+  
+  Platform
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../external/" class="md-tabs__link">
+          
+  
+  
+  Modules
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../external/WARScribe-Core/docs/" class="md-tabs__link">
+          
+  
+  
+  Components
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../proposals/index.md" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Proposals
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../specs/index.md" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Specs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guidelines/writing-docs/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Guidelines
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../adr/index.md" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ADRs
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Vindicta Platform Docs" class="md-nav__button md-logo" aria-label="Vindicta Platform Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Vindicta Platform Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vindicta-platform/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vindicta-platform/docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Platform
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../features/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Features
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modules
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modules
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../external/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../external/Vindicta-API/docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../external/Vindicta-CLI/docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../external/Vindicta-Core/docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../external/Vindicta-Portal/docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Portal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Components
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Components
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../external/WARScribe-Core/docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WarScribe Core
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../proposals/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Proposals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../specs/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guidelines/writing-docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guidelines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADRs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#workspace-dsl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workspace DSL
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="c4-system-architecture">C4 System Architecture</h1>
+<p>The <strong>Vindicta Platform</strong> architecture is defined using the <a href="https://c4model.com/">C4 Model</a> and managed as code using <a href="https://structurizr.com/dsl">Structurizr DSL</a>.</p>
+<p>This model serves as the canonical source of truth for all system containers, relationships, and component boundaries.</p>
+<h2 id="workspace-dsl">Workspace DSL</h2>
+<p>The following DSL definition resides in <code>c4/workspace.dsl</code> and can be rendered using Structurizr Lite or CLI.</p>
+<pre><code class="language-structurizr">workspace &quot;Vindicta Platform&quot; &quot;C4 Architecture Model for the unified competitive Warhammer 40k platform.&quot; {
+
+    !identifiers hierarchical
+
+    model {
+        # ─────────────────────────────────────────────
+        # External Actors
+        # ─────────────────────────────────────────────
+        player = person &quot;Competitive Player&quot; &quot;Warhammer 40k player who builds lists, tracks matches, and analyzes the meta.&quot;
+        tournamentOrganizer = person &quot;Tournament Organizer&quot; &quot;Runs events, manages pairings, and reviews results.&quot;
+        platformAdmin = person &quot;Platform Admin&quot; &quot;Maintains infrastructure, monitors health, and evolves the platform.&quot;
+
+        # ─────────────────────────────────────────────
+        # External Systems
+        # ─────────────────────────────────────────────
+        gcp = softwareSystem &quot;Google Cloud Platform&quot; &quot;Hosting, databases, and cloud services.&quot; &quot;External&quot;
+        github = softwareSystem &quot;GitHub&quot; &quot;Source control, CI/CD, and project management.&quot; &quot;External&quot;
+
+        # ─────────────────────────────────────────────
+        # Vindicta Platform
+        # ─────────────────────────────────────────────
+        vindicta = softwareSystem &quot;Vindicta Platform&quot; &quot;Unified competitive Warhammer 40k platform for army management, match tracking, meta analysis, and AI predictions.&quot; {
+
+            # ═══════════════════════════════════════════
+            # DOMAIN: Presentation
+            # User-facing interfaces and entry points
+            # ═══════════════════════════════════════════
+            group &quot;Presentation&quot; {
+                portal = container &quot;Vindicta-Portal&quot; &quot;Web portal for players — static site hosted on GCP.&quot; &quot;HTML/JS&quot; &quot;Web Browser&quot;
+                logiSlateUI = container &quot;Logi-Slate-UI&quot; &quot;React/Tailwind component library implementing the Vindicta design system.&quot; &quot;React, TypeScript, Tailwind&quot;
+                vindictaCLI = container &quot;Vindicta-CLI&quot; &quot;Unified command-line interface for developers and power users.&quot; &quot;Python, Click&quot;
+                vindictaAPI = container &quot;Vindicta-API&quot; &quot;REST API gateway — FastAPI endpoints exposing platform services.&quot; &quot;Python, FastAPI&quot;
+            }
+
+            # ═══════════════════════════════════════════
+            # DOMAIN: Game Simulation
+            # Deterministic game mechanics
+            # ═══════════════════════════════════════════
+            group &quot;Game Simulation&quot; {
+                diceEngine = container &quot;Dice-Engine&quot; &quot;CSPRNG dice roller with entropy proofs and cryptographic fairness guarantees.&quot; &quot;Python&quot;
+                entropyBuffer = container &quot;Entropy-Buffer&quot; &quot;Thread-safe, buffered entropy management for reliable RNG seeding.&quot; &quot;Python&quot;
+            }
+
+            # ═══════════════════════════════════════════
+            # DOMAIN: Game Notation
+            # Structured game transcription and parsing
+            # ═══════════════════════════════════════════
+            group &quot;Game Notation&quot; {
+                warscribeCore = container &quot;WARScribe-Core&quot; &quot;Wargame Notation System (WNS) action notation engine.&quot; &quot;Python&quot;
+                warscribeParser = container &quot;WARScribe-Parser&quot; &quot;High-level parsing library for WNS transcripts.&quot; &quot;Python&quot;
+                warscribeCLI = container &quot;WARScribe-CLI&quot; &quot;CLI tools for local wargame transcript ingestion.&quot; &quot;Python&quot;
+                battleTranscriptToolkit = container &quot;Battle-Transcript-Toolkit&quot; &quot;Markdown tools for complex agent transcript handling.&quot; &quot;Python&quot;
+            }
+
+            # ═══════════════════════════════════════════
+            # DOMAIN: Analytics
+            # Meta analysis and prediction
+            # ═══════════════════════════════════════════
+            group &quot;Analytics&quot; {
+                metaOracle = container &quot;Meta-Oracle&quot; &quot;AI debate engine for meta analysis and prediction.&quot; &quot;Python&quot;
+            }
+
+            # ═══════════════════════════════════════════
+            # DOMAIN: Primordia
+            # Deterministic tactical AI and evaluation
+            # ═══════════════════════════════════════════
+            group &quot;Primordia&quot; {
+                primordiaAI = container &quot;Primordia-AI&quot; &quot;Deterministic tactical AI engine — the Stockfish of Warhammer.&quot; &quot;Python&quot;
+                arbiterPredictor = container &quot;Arbiter-Predictor&quot; &quot;Statistical library for win probability calculations.&quot; &quot;Python&quot;
+            }
+
+            # ═══════════════════════════════════════════
+            # DOMAIN: Platform Services
+            # Shared primitives, metering, and compliance
+            # ═══════════════════════════════════════════
+            group &quot;Platform Services&quot; {
+                vindictaCore = container &quot;Vindicta-Core&quot; &quot;Shared primitives, configuration, and interfaces used across all modules.&quot; &quot;Python&quot;
+                economyEngine = container &quot;Economy-Engine&quot; &quot;Gas Tank, Atomic Ledger, and Usage Meter — resource consumption and cost model.&quot; &quot;Python&quot;
+                quotaManager = container &quot;Quota-Manager&quot; &quot;Usage tracking, quota enforcement, and consumption prediction.&quot; &quot;Python&quot;
+                meteredSaaSLogic = container &quot;Metered-SaaS-Logic&quot; &quot;Dynamic usage metering and pricing multiplier logic.&quot; &quot;Python&quot;
+                auditLogPro = container &quot;Audit-Log-Pro&quot; &quot;Dual-sink transactional audit logging system.&quot; &quot;Python&quot;
+                atomicLedgerPy = container &quot;Atomic-Ledger-Py&quot; &quot;Lightweight atomic ledger pattern implementation for transactional integrity.&quot; &quot;Python&quot;
+                agentAuditorSDK = container &quot;Agent-Auditor-SDK&quot; &quot;Framework for Mechanical Auditor agents — compliance verification.&quot; &quot;Python&quot;
+            }
+
+            # ═══════════════════════════════════════════
+            # DOMAIN: Developer Experience
+            # Tooling, docs, agents, and org config
+            # ═══════════════════════════════════════════
+            group &quot;Developer Experience&quot; {
+                platformDocs = container &quot;Platform-Docs&quot; &quot;MkDocs Material documentation site — platform-wide architecture, guides, and ADRs.&quot; &quot;MkDocs, Markdown&quot;
+                dotGithub = container &quot;.github&quot; &quot;Organization-wide GitHub configuration, templates, issue forms, and roadmap.&quot; &quot;YAML, Markdown&quot;
+                dotSpecify = container &quot;.specify&quot; &quot;Specification-Driven Development (SDD) constitution and memory.&quot; &quot;Markdown&quot;
+                dotAgent = container &quot;.agent&quot; &quot;Organization-wide agent workflows and automation definitions.&quot; &quot;Markdown, YAML&quot;
+                vindictaAgents = container &quot;Vindicta-Agents&quot; &quot;Dev container images and agent runtime environments.&quot; &quot;Docker, PowerShell&quot;
+            }
+        }
+
+        # ─────────────────────────────────────────────
+        # Relationships: Actors → System
+        # ─────────────────────────────────────────────
+        player -&gt; vindicta &quot;Uses&quot; &quot;HTTPS, CLI&quot;
+        tournamentOrganizer -&gt; vindicta &quot;Manages tournaments via&quot; &quot;HTTPS&quot;
+        platformAdmin -&gt; vindicta &quot;Administers and evolves&quot; &quot;CLI, GitHub&quot;
+
+        # ─────────────────────────────────────────────
+        # Relationships: Actors → Containers
+        # ─────────────────────────────────────────────
+        player -&gt; vindicta.portal &quot;Browses army lists, matches, meta&quot; &quot;HTTPS&quot;
+        player -&gt; vindicta.vindictaCLI &quot;Power-user game management&quot; &quot;Terminal&quot;
+        tournamentOrganizer -&gt; vindicta.portal &quot;Manages events&quot; &quot;HTTPS&quot;
+        platformAdmin -&gt; vindicta.vindictaCLI &quot;Platform operations&quot; &quot;Terminal&quot;
+        platformAdmin -&gt; vindicta.platformDocs &quot;Reads and evolves architecture&quot; &quot;HTTPS&quot;
+
+        # ─────────────────────────────────────────────
+        # Relationships: Containers → Containers
+        # ─────────────────────────────────────────────
+
+        # Presentation → Backend
+        vindicta.portal -&gt; vindicta.vindictaAPI &quot;Calls&quot; &quot;REST/JSON&quot;
+        vindicta.portal -&gt; vindicta.logiSlateUI &quot;Uses components from&quot; &quot;&quot;
+        vindicta.vindictaCLI -&gt; vindicta.vindictaAPI &quot;Calls&quot; &quot;REST/JSON&quot;
+
+        # API → Domain Services
+        vindicta.vindictaAPI -&gt; vindicta.vindictaCore &quot;Uses shared primitives&quot; &quot;&quot;
+        vindicta.vindictaAPI -&gt; vindicta.diceEngine &quot;Requests dice rolls&quot; &quot;&quot;
+        vindicta.vindictaAPI -&gt; vindicta.economyEngine &quot;Tracks resource usage&quot; &quot;&quot;
+        vindicta.vindictaAPI -&gt; vindicta.metaOracle &quot;Requests predictions&quot; &quot;&quot;
+        vindicta.vindictaAPI -&gt; vindicta.warscribeCore &quot;Processes game notation&quot; &quot;&quot;
+        vindicta.vindictaAPI -&gt; vindicta.quotaManager &quot;Enforces usage quotas&quot; &quot;&quot;
+
+        # Game Simulation internals
+        vindicta.diceEngine -&gt; vindicta.entropyBuffer &quot;Seeds RNG from&quot; &quot;&quot;
+        vindicta.economyEngine -&gt; vindicta.atomicLedgerPy &quot;Uses atomic ledger pattern&quot; &quot;&quot;
+        vindicta.economyEngine -&gt; vindicta.meteredSaaSLogic &quot;Applies pricing multipliers&quot; &quot;&quot;
+
+        # Game Notation internals
+        vindicta.warscribeParser -&gt; vindicta.warscribeCore &quot;Parses WNS via&quot; &quot;&quot;
+        vindicta.warscribeCLI -&gt; vindicta.warscribeParser &quot;Uses&quot; &quot;&quot;
+        vindicta.battleTranscriptToolkit -&gt; vindicta.warscribeCore &quot;Processes transcripts via&quot; &quot;&quot;
+
+        # Analytics internals
+        vindicta.metaOracle -&gt; vindicta.arbiterPredictor &quot;Uses win probability from&quot; &quot;&quot;
+        vindicta.metaOracle -&gt; vindicta.warscribeCore &quot;Reads game notation via&quot; &quot;&quot;
+        vindicta.primordiaAI -&gt; vindicta.diceEngine &quot;Simulates outcomes via&quot; &quot;&quot;
+        vindicta.primordiaAI -&gt; vindicta.arbiterPredictor &quot;Evaluates positions via&quot; &quot;&quot;
+
+        # Platform Services internals
+        vindicta.quotaManager -&gt; vindicta.meteredSaaSLogic &quot;Uses metering logic from&quot; &quot;&quot;
+        vindicta.agentAuditorSDK -&gt; vindicta.auditLogPro &quot;Writes audit trails to&quot; &quot;&quot;
+
+        # Cross-cutting dependencies
+        vindicta.vindictaCLI -&gt; vindicta.vindictaCore &quot;Uses shared primitives&quot; &quot;&quot;
+
+        # External system relationships
+        vindicta.portal -&gt; gcp &quot;Hosted on&quot; &quot;Cloud Run / GCS&quot;
+        vindicta.vindictaAPI -&gt; gcp &quot;Deployed to&quot; &quot;Cloud Run&quot;
+        vindicta.vindictaAgents -&gt; github &quot;Builds via&quot; &quot;GitHub Actions&quot;
+        vindicta.platformDocs -&gt; github &quot;Published via&quot; &quot;GitHub Pages&quot;
+        vindicta.dotGithub -&gt; github &quot;Configures&quot; &quot;Org settings&quot;
+    }
+
+    views {
+        # ─────────────────────────────────────────────
+        # Level 1: System Context
+        # ─────────────────────────────────────────────
+        systemContext vindicta &quot;SystemContext&quot; {
+            include *
+            autoLayout
+            description &quot;Level 1 — Vindicta Platform in its environment: users and external systems.&quot;
+        }
+
+        # ─────────────────────────────────────────────
+        # Level 2: Container Overview
+        # ─────────────────────────────────────────────
+        container vindicta &quot;Containers&quot; {
+            include *
+            autoLayout
+            description &quot;Level 2 — All containers grouped by functional domain.&quot;
+        }
+
+        # ─────────────────────────────────────────────
+        # Level 2: Domain-Focused Views
+        # ─────────────────────────────────────────────
+        container vindicta &quot;Presentation&quot; {
+            include vindicta.portal vindicta.logiSlateUI vindicta.vindictaCLI vindicta.vindictaAPI
+            include vindicta.vindictaCore
+            include player tournamentOrganizer platformAdmin
+            autoLayout
+            description &quot;Level 2 — Presentation domain: user-facing interfaces and API gateway.&quot;
+        }
+
+        container vindicta &quot;GameSimulation&quot; {
+            include vindicta.diceEngine vindicta.entropyBuffer
+            include vindicta.vindictaAPI
+            autoLayout
+            description &quot;Level 2 — Game Simulation domain: dice and entropy.&quot;
+        }
+
+        container vindicta &quot;GameNotation&quot; {
+            include vindicta.warscribeCore vindicta.warscribeParser vindicta.warscribeCLI vindicta.battleTranscriptToolkit
+            include vindicta.vindictaAPI
+            autoLayout
+            description &quot;Level 2 — Game Notation domain: WARScribe and transcript processing.&quot;
+        }
+
+        container vindicta &quot;Analytics&quot; {
+            include vindicta.metaOracle
+            include vindicta.warscribeCore vindicta.arbiterPredictor
+            include vindicta.vindictaAPI
+            autoLayout
+            description &quot;Level 2 — Analytics domain: meta analysis and prediction.&quot;
+        }
+
+        container vindicta &quot;Primordia&quot; {
+            include vindicta.primordiaAI vindicta.arbiterPredictor
+            include vindicta.diceEngine
+            autoLayout
+            description &quot;Level 2 — Primordia domain: deterministic tactical AI and evaluation.&quot;
+        }
+
+        container vindicta &quot;PlatformServices&quot; {
+            include vindicta.vindictaCore vindicta.economyEngine vindicta.quotaManager vindicta.meteredSaaSLogic
+            include vindicta.auditLogPro vindicta.atomicLedgerPy vindicta.agentAuditorSDK
+            autoLayout
+            description &quot;Level 2 — Platform Services domain: shared primitives, usage, metering, and compliance.&quot;
+        }
+
+        container vindicta &quot;DeveloperExperience&quot; {
+            include vindicta.platformDocs vindicta.dotGithub vindicta.dotSpecify vindicta.dotAgent vindicta.vindictaAgents
+            include github
+            include platformAdmin
+            autoLayout
+            description &quot;Level 2 — Developer Experience domain: docs, org config, agents, and tooling.&quot;
+        }
+
+        # ─────────────────────────────────────────────
+        # Styles
+        # ─────────────────────────────────────────────
+        styles {
+            element &quot;Software System&quot; {
+                background #6B21A8
+                color #FFFFFF
+                shape RoundedBox
+            }
+            element &quot;Person&quot; {
+                background #7C3AED
+                color #FFFFFF
+                shape Person
+            }
+            element &quot;Container&quot; {
+                background #8B5CF6
+                color #FFFFFF
+            }
+            element &quot;External&quot; {
+                background #374151
+                color #9CA3AF
+            }
+        }
+    }
+
+}
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

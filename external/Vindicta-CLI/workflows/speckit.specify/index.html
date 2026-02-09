@@ -1,0 +1,1417 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Create or update the feature specification from a natural language feature description.">
+      
+      
+      
+        <link rel="canonical" href="https://vindicta-platform.github.io/docs/external/Vindicta-CLI/workflows/speckit.specify/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Speckit.specify - Vindicta Platform Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#user-input" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Vindicta Platform Docs" class="md-header__button md-logo" aria-label="Vindicta Platform Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Vindicta Platform Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Speckit.specify
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vindicta-platform/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vindicta-platform/docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../platform/getting-started/index.md" class="md-tabs__link">
+          
+  
+  
+  Platform
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../" class="md-tabs__link">
+          
+  
+  
+  Modules
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../WARScribe-Core/docs/" class="md-tabs__link">
+          
+  
+  
+  Components
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../platform/proposals/index.md" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Proposals
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../platform/specs/index.md" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Specs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../guidelines/writing-docs/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Guidelines
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../platform/adr/index.md" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ADRs
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Vindicta Platform Docs" class="md-nav__button md-logo" aria-label="Vindicta Platform Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Vindicta Platform Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vindicta-platform/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vindicta-platform/docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Platform
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../platform/getting-started/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../platform/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../platform/features/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Features
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modules
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modules
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Vindicta-API/docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Vindicta-Core/docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Vindicta-Portal/docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Portal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Components
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Components
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../WARScribe-Core/docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WarScribe Core
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../platform/proposals/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Proposals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../platform/specs/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../guidelines/writing-docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guidelines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../platform/adr/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADRs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#user-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Input
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Outline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#general-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General Guidelines
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Guidelines
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Guidelines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#section-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Section Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#for-ai-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        For AI Generation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#success-criteria-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Criteria Guidelines
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>Speckit.specify</h1>
+
+<h2 id="user-input">User Input</h2>
+<pre><code class="language-text">$ARGUMENTS
+</code></pre>
+<p>You <strong>MUST</strong> consider the user input before proceeding (if not empty).</p>
+<h2 id="outline">Outline</h2>
+<p>The text the user typed after <code>/speckit.specify</code> in the triggering message <strong>is</strong> the feature description. Assume you always have it available in this conversation even if <code>$ARGUMENTS</code> appears literally below. Do not ask the user to repeat it unless they provided an empty command.</p>
+<p>Given that feature description, do this:</p>
+<ol>
+<li><strong>Generate a concise short name</strong> (2-4 words) for the branch:</li>
+<li>Analyze the feature description and extract the most meaningful keywords</li>
+<li>Create a 2-4 word short name that captures the essence of the feature</li>
+<li>Use action-noun format when possible (e.g., "add-user-auth", "fix-payment-bug")</li>
+<li>Preserve technical terms and acronyms (OAuth2, API, JWT, etc.)</li>
+<li>Keep it concise but descriptive enough to understand the feature at a glance</li>
+<li>
+<p>Examples:</p>
+<ul>
+<li>"I want to add user authentication" → "user-auth"</li>
+<li>"Implement OAuth2 integration for the API" → "oauth2-api-integration"</li>
+<li>"Create a dashboard for analytics" → "analytics-dashboard"</li>
+<li>"Fix payment processing timeout bug" → "fix-payment-timeout"</li>
+</ul>
+</li>
+<li>
+<p><strong>Check for existing branches before creating new one</strong>:</p>
+</li>
+</ol>
+<p>a. First, fetch all remote branches to ensure we have the latest information:</p>
+<pre><code>  ```bash
+  git fetch --all --prune
+  ```
+</code></pre>
+<p>b. Find the highest feature number across all sources for the short-name:
+      - Remote branches: <code>git ls-remote --heads origin | grep -E 'refs/heads/[0-9]+-&lt;short-name&gt;$'</code>
+      - Local branches: <code>git branch | grep -E '^[* ]*[0-9]+-&lt;short-name&gt;$'</code>
+      - Specs directories: Check for directories matching <code>specs/[0-9]+-&lt;short-name&gt;</code></p>
+<p>c. Determine the next available number:
+      - Extract all numbers from all three sources
+      - Find the highest number N
+      - Use N+1 for the new branch number</p>
+<p>d. Run the script <code>.specify/scripts/powershell/create-new-feature.ps1 -Json "$ARGUMENTS"</code> with the calculated number and short-name:
+      - Pass <code>--number N+1</code> and <code>--short-name "your-short-name"</code> along with the feature description
+      - Bash example: <code>.specify/scripts/powershell/create-new-feature.ps1 -Json "$ARGUMENTS" --json --number 5 --short-name "user-auth" "Add user authentication"</code>
+      - PowerShell example: <code>.specify/scripts/powershell/create-new-feature.ps1 -Json "$ARGUMENTS" -Json -Number 5 -ShortName "user-auth" "Add user authentication"</code></p>
+<p><strong>IMPORTANT</strong>:
+   - Check all three sources (remote branches, local branches, specs directories) to find the highest number
+   - Only match branches/directories with the exact short-name pattern
+   - If no existing branches/directories found with this short-name, start with number 1
+   - You must only ever run this script once per feature
+   - The JSON is provided in the terminal as output - always refer to it to get the actual content you're looking for
+   - The JSON output will contain BRANCH_NAME and SPEC_FILE paths
+   - For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot")</p>
+<ol>
+<li>
+<p>Load <code>.specify/templates/spec-template.md</code> to understand required sections.</p>
+</li>
+<li>
+<p>Follow this execution flow:</p>
+<ol>
+<li>Parse user description from Input
+   If empty: ERROR "No feature description provided"</li>
+<li>Extract key concepts from description
+   Identify: actors, actions, data, constraints</li>
+<li>For unclear aspects:</li>
+<li>Make informed guesses based on context and industry standards</li>
+<li>Only mark with [NEEDS CLARIFICATION: specific question] if:<ul>
+<li>The choice significantly impacts feature scope or user experience</li>
+<li>Multiple reasonable interpretations exist with different implications</li>
+<li>No reasonable default exists</li>
+</ul>
+</li>
+<li><strong>LIMIT: Maximum 3 [NEEDS CLARIFICATION] markers total</strong></li>
+<li>Prioritize clarifications by impact: scope &gt; security/privacy &gt; user experience &gt; technical details</li>
+<li>Fill User Scenarios &amp; Testing section
+   If no clear user flow: ERROR "Cannot determine user scenarios"</li>
+<li>Generate Functional Requirements
+   Each requirement must be testable
+   Use reasonable defaults for unspecified details (document assumptions in Assumptions section)</li>
+<li>Define Success Criteria
+   Create measurable, technology-agnostic outcomes
+   Include both quantitative metrics (time, performance, volume) and qualitative measures (user satisfaction, task completion)
+   Each criterion must be verifiable without implementation details</li>
+<li>Identify Key Entities (if data involved)</li>
+<li>Return: SUCCESS (spec ready for planning)</li>
+</ol>
+</li>
+<li>
+<p>Write the specification to SPEC_FILE using the template structure, replacing placeholders with concrete details derived from the feature description (arguments) while preserving section order and headings.</p>
+</li>
+<li>
+<p><strong>Specification Quality Validation</strong>: After writing the initial spec, validate it against quality criteria:</p>
+</li>
+</ol>
+<p>a. <strong>Create Spec Quality Checklist</strong>: Generate a checklist file at <code>FEATURE_DIR/checklists/requirements.md</code> using the checklist template structure with these validation items:</p>
+<pre><code>  ```markdown
+  # Specification Quality Checklist: [FEATURE NAME]
+
+  **Purpose**: Validate specification completeness and quality before proceeding to planning
+  **Created**: [DATE]
+  **Feature**: [Link to spec.md]
+
+  ## Content Quality
+
+  - [ ] No implementation details (languages, frameworks, APIs)
+  - [ ] Focused on user value and business needs
+  - [ ] Written for non-technical stakeholders
+  - [ ] All mandatory sections completed
+
+  ## Requirement Completeness
+
+  - [ ] No [NEEDS CLARIFICATION] markers remain
+  - [ ] Requirements are testable and unambiguous
+  - [ ] Success criteria are measurable
+  - [ ] Success criteria are technology-agnostic (no implementation details)
+  - [ ] All acceptance scenarios are defined
+  - [ ] Edge cases are identified
+  - [ ] Scope is clearly bounded
+  - [ ] Dependencies and assumptions identified
+
+  ## Feature Readiness
+
+  - [ ] All functional requirements have clear acceptance criteria
+  - [ ] User scenarios cover primary flows
+  - [ ] Feature meets measurable outcomes defined in Success Criteria
+  - [ ] No implementation details leak into specification
+
+  ## Notes
+
+  - Items marked incomplete require spec updates before `/speckit.clarify` or `/speckit.plan`
+  ```
+</code></pre>
+<p>b. <strong>Run Validation Check</strong>: Review the spec against each checklist item:
+      - For each item, determine if it passes or fails
+      - Document specific issues found (quote relevant spec sections)</p>
+<p>c. <strong>Handle Validation Results</strong>:</p>
+<pre><code>  - **If all items pass**: Mark checklist complete and proceed to step 6
+
+  - **If items fail (excluding [NEEDS CLARIFICATION])**:
+    1. List the failing items and specific issues
+    2. Update the spec to address each issue
+    3. Re-run validation until all items pass (max 3 iterations)
+    4. If still failing after 3 iterations, document remaining issues in checklist notes and warn user
+
+  - **If [NEEDS CLARIFICATION] markers remain**:
+    1. Extract all [NEEDS CLARIFICATION: ...] markers from the spec
+    2. **LIMIT CHECK**: If more than 3 markers exist, keep only the 3 most critical (by scope/security/UX impact) and make informed guesses for the rest
+    3. For each clarification needed (max 3), present options to user in this format:
+
+       ```markdown
+       ## Question [N]: [Topic]
+
+       **Context**: [Quote relevant spec section]
+
+       **What we need to know**: [Specific question from NEEDS CLARIFICATION marker]
+
+       **Suggested Answers**:
+
+       | Option | Answer | Implications |
+       |--------|--------|--------------|
+       | A      | [First suggested answer] | [What this means for the feature] |
+       | B      | [Second suggested answer] | [What this means for the feature] |
+       | C      | [Third suggested answer] | [What this means for the feature] |
+       | Custom | Provide your own answer | [Explain how to provide custom input] |
+
+       **Your choice**: _[Wait for user response]_
+       ```
+
+    4. **CRITICAL - Table Formatting**: Ensure markdown tables are properly formatted:
+       - Use consistent spacing with pipes aligned
+       - Each cell should have spaces around content: `| Content |` not `|Content|`
+       - Header separator must have at least 3 dashes: `|--------|`
+       - Test that the table renders correctly in markdown preview
+    5. Number questions sequentially (Q1, Q2, Q3 - max 3 total)
+    6. Present all questions together before waiting for responses
+    7. Wait for user to respond with their choices for all questions (e.g., "Q1: A, Q2: Custom - [details], Q3: B")
+    8. Update the spec by replacing each [NEEDS CLARIFICATION] marker with the user's selected or provided answer
+    9. Re-run validation after all clarifications are resolved
+</code></pre>
+<p>d. <strong>Update Checklist</strong>: After each validation iteration, update the checklist file with current pass/fail status</p>
+<ol>
+<li>Report completion with branch name, spec file path, checklist results, and readiness for the next phase (<code>/speckit.clarify</code> or <code>/speckit.plan</code>).</li>
+</ol>
+<p><strong>NOTE:</strong> The script creates and checks out the new branch and initializes the spec file before writing.</p>
+<h2 id="general-guidelines">General Guidelines</h2>
+<h2 id="quick-guidelines">Quick Guidelines</h2>
+<ul>
+<li>Focus on <strong>WHAT</strong> users need and <strong>WHY</strong>.</li>
+<li>Avoid HOW to implement (no tech stack, APIs, code structure).</li>
+<li>Written for business stakeholders, not developers.</li>
+<li>DO NOT create any checklists that are embedded in the spec. That will be a separate command.</li>
+</ul>
+<h3 id="section-requirements">Section Requirements</h3>
+<ul>
+<li><strong>Mandatory sections</strong>: Must be completed for every feature</li>
+<li><strong>Optional sections</strong>: Include only when relevant to the feature</li>
+<li>When a section doesn't apply, remove it entirely (don't leave as "N/A")</li>
+</ul>
+<h3 id="for-ai-generation">For AI Generation</h3>
+<p>When creating this spec from a user prompt:</p>
+<ol>
+<li><strong>Make informed guesses</strong>: Use context, industry standards, and common patterns to fill gaps</li>
+<li><strong>Document assumptions</strong>: Record reasonable defaults in the Assumptions section</li>
+<li><strong>Limit clarifications</strong>: Maximum 3 [NEEDS CLARIFICATION] markers - use only for critical decisions that:</li>
+<li>Significantly impact feature scope or user experience</li>
+<li>Have multiple reasonable interpretations with different implications</li>
+<li>Lack any reasonable default</li>
+<li><strong>Prioritize clarifications</strong>: scope &gt; security/privacy &gt; user experience &gt; technical details</li>
+<li><strong>Think like a tester</strong>: Every vague requirement should fail the "testable and unambiguous" checklist item</li>
+<li><strong>Common areas needing clarification</strong> (only if no reasonable default exists):</li>
+<li>Feature scope and boundaries (include/exclude specific use cases)</li>
+<li>User types and permissions (if multiple conflicting interpretations possible)</li>
+<li>Security/compliance requirements (when legally/financially significant)</li>
+</ol>
+<p><strong>Examples of reasonable defaults</strong> (don't ask about these):</p>
+<ul>
+<li>Data retention: Industry-standard practices for the domain</li>
+<li>Performance targets: Standard web/mobile app expectations unless specified</li>
+<li>Error handling: User-friendly messages with appropriate fallbacks</li>
+<li>Authentication method: Standard session-based or OAuth2 for web apps</li>
+<li>Integration patterns: RESTful APIs unless specified otherwise</li>
+</ul>
+<h3 id="success-criteria-guidelines">Success Criteria Guidelines</h3>
+<p>Success criteria must be:</p>
+<ol>
+<li><strong>Measurable</strong>: Include specific metrics (time, percentage, count, rate)</li>
+<li><strong>Technology-agnostic</strong>: No mention of frameworks, languages, databases, or tools</li>
+<li><strong>User-focused</strong>: Describe outcomes from user/business perspective, not system internals</li>
+<li><strong>Verifiable</strong>: Can be tested/validated without knowing implementation details</li>
+</ol>
+<p><strong>Good examples</strong>:</p>
+<ul>
+<li>"Users can complete checkout in under 3 minutes"</li>
+<li>"System supports 10,000 concurrent users"</li>
+<li>"95% of searches return results in under 1 second"</li>
+<li>"Task completion rate improves by 40%"</li>
+</ul>
+<p><strong>Bad examples</strong> (implementation-focused):</p>
+<ul>
+<li>"API response time is under 200ms" (too technical, use "Users see results instantly")</li>
+<li>"Database can handle 1000 TPS" (implementation detail, use user-facing metric)</li>
+<li>"React components render efficiently" (framework-specific)</li>
+<li>"Redis cache hit rate above 80%" (technology-specific)</li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "content.code.copy"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

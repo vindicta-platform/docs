@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Version: 1.0.1-ci-test -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Vindicta Portal - The Apex of Competitive Tabletop Wargaming. Access the Club or Platform.">
+    <title>VINDICTA | The Apex of Competitive Tabletop</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Bebas+Neue&display=swap"
+        rel="stylesheet">
+
+    <!-- Design System -->
+    <link href="assets/css/design-system.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1520 25%, #12121a 50%, #0d1a1a 75%, #0a0a0f 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+            color: white;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        /* ============================================
+           ANIMATED BACKGROUND LAYERS
+        ============================================ */
+        .bg-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* Particle Field */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 215, 0, 0.6);
+            border-radius: 50%;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0.3;
+            }
+
+            25% {
+                transform: translateY(-100px) translateX(50px);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: translateY(-200px) translateX(-30px);
+                opacity: 0.5;
+            }
+
+            75% {
+                transform: translateY(-100px) translateX(20px);
+                opacity: 0.9;
+            }
+        }
+
+        /* Grid Overlay - Hidden for cleaner look */
+        .grid-overlay {
+            display: none;
+        }
+
+        @keyframes gridPulse {
+
+            0%,
+            100% {
+                opacity: 0.3;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        /* Radial Glows - Subtle */
+        .glow-left {
+            position: absolute;
+            top: 50%;
+            left: 20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(233, 69, 96, 0.06) 0%, transparent 60%);
+            transform: translate(-50%, -50%);
+            animation: pulseGlow 6s ease-in-out infinite;
+        }
+
+        .glow-right {
+            position: absolute;
+            top: 50%;
+            right: 20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.06) 0%, transparent 60%);
+            transform: translate(50%, -50%);
+            animation: pulseGlowRight 6s ease-in-out infinite 3s;
+        }
+
+        @keyframes pulseGlow {
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        .glow-right {
+            animation: pulseGlowRight 4s ease-in-out infinite 2s;
+        }
+
+        @keyframes pulseGlowRight {
+
+            0%,
+            100% {
+                transform: translate(50%, -50%) scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: translate(50%, -50%) scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        /* Scanline */
+        .scanline {
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.4), transparent);
+            animation: scanDown 8s linear infinite;
+        }
+
+        @keyframes scanDown {
+            0% {
+                top: -4px;
+            }
+
+            100% {
+                top: 100%;
+            }
+        }
+
+        /* Vignette */
+        .vignette {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.8) 100%);
+        }
+
+        /* ============================================
+           HEADER
+        ============================================ */
+        .portal-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 6px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--vindicta-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: var(--vindicta-gold);
+            animation: logoPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes logoPulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 rgba(255, 215, 0, 0);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            }
+        }
+
+        .logo .white {
+            color: #fff;
+        }
+
+        .logo .gold {
+            color: var(--vindicta-gold);
+        }
+
+        .tagline {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: rgba(255, 255, 255, 0.25);
+            font-weight: 600;
+        }
+
+        /* ============================================
+           MAIN SPLIT LAYOUT
+        ============================================ */
+        .portal-container {
+            display: flex;
+            height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Center Divider */
+        .center-divider {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 1px;
+            height: 60%;
+            background: linear-gradient(180deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+
+        .center-divider::before {
+            content: '◆';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--vindicta-gold);
+            font-size: 1.2rem;
+            animation: diamondPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes diamondPulse {
+
+            0%,
+            100% {
+                opacity: 0.5;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+        }
+
+        /* ============================================
+           PANE STYLES
+        ============================================ */
+        .pane {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+            text-decoration: none;
+            position: relative;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+        }
+
+        .pane::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 15, 0.75);
+            transition: all 0.5s;
+        }
+
+        .pane:hover::before {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Animated Border on Hover */
+        .pane::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 1px solid transparent;
+            transition: all 0.5s;
+        }
+
+        .pane-club:hover::after {
+            border-color: rgba(233, 69, 96, 0.5);
+            box-shadow: inset 0 0 80px rgba(233, 69, 96, 0.1);
+        }
+
+        .pane-platform:hover::after {
+            border-color: rgba(0, 212, 255, 0.5);
+            box-shadow: inset 0 0 80px rgba(0, 212, 255, 0.1);
+        }
+
+        .pane-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            transform: translateY(0);
+            transition: transform 0.5s ease;
+        }
+
+        .pane:hover .pane-content {
+            transform: translateY(-15px);
+        }
+
+        /* Pane Icon */
+        .pane-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 2rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            transition: all 0.5s;
+        }
+
+        .pane-club .pane-icon {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .pane-club:hover .pane-icon {
+            border-color: #e94560;
+            color: #e94560;
+            box-shadow: 0 0 40px rgba(233, 69, 96, 0.3);
+            transform: scale(1.1);
+        }
+
+        .pane-platform .pane-icon {
+            color: rgba(0, 212, 255, 0.3);
+        }
+
+        .pane-platform:hover .pane-icon {
+            border-color: var(--vindicta-gold);
+            color: var(--vindicta-gold);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
+            transform: scale(1.1);
+        }
+
+        /* Pane Title */
+        .pane-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(4rem, 12vw, 8rem);
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            line-height: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .pane-club .pane-title {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .pane-club .pane-title span {
+            display: block;
+            font-size: 0.4em;
+            letter-spacing: 12px;
+            color: rgba(255, 255, 255, 0.3);
+            transition: color 0.3s;
+        }
+
+        .pane-club:hover .pane-title span {
+            color: #e94560;
+        }
+
+        .pane-platform .pane-title {
+            background: linear-gradient(180deg, var(--vindicta-gold) 0%, #00d4ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .pane-platform .pane-title span {
+            display: block;
+            font-size: 0.4em;
+            letter-spacing: 12px;
+            background: linear-gradient(90deg, rgba(0, 212, 255, 0.5), rgba(255, 215, 0, 0.5));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: opacity 0.3s;
+        }
+
+        .pane-platform:hover .pane-title span {
+            opacity: 1;
+        }
+
+        /* Subtitle */
+        .pane-subtitle {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        .pane-club .pane-subtitle {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .pane-platform .pane-subtitle {
+            color: rgba(0, 212, 255, 0.4);
+        }
+
+        /* Description */
+        .pane-desc {
+            max-width: 300px;
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            transition: color 0.3s;
+        }
+
+        .pane:hover .pane-desc {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Button */
+        .pane-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.25rem 2.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.7rem;
+            border-radius: 4px;
+            transition: all 0.4s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.02);
+            color: rgba(255, 255, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pane-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .pane:hover .pane-btn::before {
+            left: 100%;
+        }
+
+        .pane-club:hover .pane-btn {
+            background: #e94560;
+            border-color: #e94560;
+            color: #fff;
+            box-shadow: 0 15px 50px rgba(233, 69, 96, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .pane-platform:hover .pane-btn {
+            background: var(--vindicta-gold);
+            border-color: var(--vindicta-gold);
+            color: #000;
+            box-shadow: 0 15px 50px rgba(255, 215, 0, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .btn-arrow {
+            transition: transform 0.3s;
+        }
+
+        .pane:hover .btn-arrow {
+            transform: translateX(5px);
+        }
+
+        /* ============================================
+           FOOTER
+        ============================================ */
+        .portal-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            text-align: center;
+            z-index: 100;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: statusPulse 2s infinite;
+        }
+
+        @keyframes statusPulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+            }
+        }
+
+        .portal-footer p {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: rgba(255, 255, 255, 0.15);
+            font-weight: 600;
+        }
+
+        /* ============================================
+           RESPONSIVE
+        ============================================ */
+        @media (max-width: 900px) {
+            .portal-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+                letter-spacing: 3px;
+            }
+
+            .logo-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 0.9rem;
+            }
+
+            .tagline {
+                font-size: 0.5rem;
+                letter-spacing: 2px;
+            }
+
+            .portal-container {
+                flex-direction: column;
+                padding-top: 80px;
+                /* Account for stacked header */
+            }
+
+            .center-divider {
+                width: 60%;
+                height: 1px;
+                top: 50%;
+            }
+
+            .pane {
+                padding: 2rem 1.5rem;
+            }
+
+            .pane-title {
+                font-size: clamp(2.5rem, 12vw, 4rem);
+                letter-spacing: 4px;
+            }
+
+            .pane-title span {
+                letter-spacing: 6px !important;
+            }
+
+            .pane-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+            }
+
+            .pane-subtitle {
+                font-size: 0.55rem;
+                letter-spacing: 4px;
+                margin-bottom: 1rem;
+            }
+
+            .pane-desc {
+                font-size: 0.85rem;
+                margin-bottom: 1.5rem;
+                max-width: 100%;
+                padding: 0 1rem;
+            }
+
+            .pane-btn {
+                padding: 1rem 2rem;
+                font-size: 0.6rem;
+            }
+
+            .glow-left,
+            .glow-right {
+                width: 300px;
+                height: 300px;
+            }
+
+            .portal-footer {
+                padding: 0.75rem;
+            }
+
+            .portal-footer p {
+                font-size: 0.45rem;
+                letter-spacing: 2px;
+            }
+        }
+
+        /* Extra small mobile */
+        @media (max-width: 400px) {
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .pane-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="flags-loading">
+    <img src="assets/img/hero.svg" id="splash-img" alt="Vindicta Hero" style="display:none;">
+    <style>
+        /* Hide elements labeled with features until flags are ready */
+        .flags-loading [data-feature] {
+            visibility: hidden !important;
+        }
+    </style>
+
+    <!-- ============================================
+         BACKGROUND LAYERS
+    ============================================ -->
+    <div class="bg-layer">
+        <!-- Particle Field -->
+        <div class="particles">
+            <div class="particle" style="left: 10%; top: 20%; animation-delay: 0s;"></div>
+            <div class="particle" style="left: 20%; top: 60%; animation-delay: 2s;"></div>
+            <div class="particle" style="left: 30%; top: 40%; animation-delay: 4s;"></div>
+            <div class="particle" style="left: 40%; top: 80%; animation-delay: 1s;"></div>
+            <div class="particle" style="left: 50%; top: 30%; animation-delay: 3s;"></div>
+            <div class="particle" style="left: 60%; top: 70%; animation-delay: 5s;"></div>
+            <div class="particle" style="left: 70%; top: 50%; animation-delay: 2.5s;"></div>
+            <div class="particle" style="left: 80%; top: 25%; animation-delay: 1.5s;"></div>
+            <div class="particle" style="left: 90%; top: 55%; animation-delay: 3.5s;"></div>
+            <div class="particle" style="left: 15%; top: 85%; animation-delay: 4.5s;"></div>
+            <div class="particle" style="left: 85%; top: 15%; animation-delay: 0.5s;"></div>
+            <div class="particle" style="left: 45%; top: 90%; animation-delay: 2.8s;"></div>
+        </div>
+
+        <!-- Grid Overlay -->
+        <div class="grid-overlay"></div>
+
+        <!-- Radial Glows -->
+        <div class="glow-left"></div>
+        <div class="glow-right"></div>
+
+        <!-- Scanline -->
+        <div class="scanline"></div>
+
+        <!-- Vignette -->
+        <div class="vignette"></div>
+    </div>
+
+    <!-- Center Divider -->
+    <div class="center-divider"></div>
+
+    <!-- ============================================
+         HEADER
+    ============================================ -->
+    <header class="portal-header">
+        <div class="logo">
+            <div class="logo-icon">V</div>
+            <span class="white">VINDICTA</span>
+        </div>
+        <div class="tagline">Est. M3.020 • Long Island, NY</div>
+    </header>
+
+    <!-- ============================================
+         MAIN SPLIT
+    ============================================ -->
+    <div class="portal-container">
+
+        <!-- Club Pane -->
+        <a href="club/" class="pane pane-club">
+            <div class="pane-content">
+                <div class="pane-icon">⚔️</div>
+                <h2 class="pane-title">CLUB<span>The Brotherhood</span></h2>
+                <p class="pane-subtitle">Community • Events • Glory</p>
+                <p class="pane-desc">Join the fellowship. Access team rosters, upcoming events, and community resources.
+                </p>
+                <span class="pane-btn">
+                    Enter Sanctum
+                    <span class="btn-arrow">→</span>
+                </span>
+            </div>
+        </a>
+
+        <!-- Platform Pane -->
+        <a href="platform/" class="pane pane-platform">
+            <div class="pane-content">
+                <div class="pane-icon">◆</div>
+                <h2 class="pane-title">PLATFORM<span>Intelligence Core</span></h2>
+                <p class="pane-subtitle">Strategy • Data • Precision</p>
+                <p class="pane-desc">Unleash the Meta-Oracle. Track battles, analyze data, and gain the competitive
+                    edge.</p>
+                <span class="pane-btn">
+                    Initialize Core
+                    <span class="btn-arrow">→</span>
+                </span>
+            </div>
+        </a>
+
+    </div>
+
+    <!-- ============================================
+         FOOTER
+    ============================================ -->
+    <footer class="portal-footer">
+        <div class="footer-content">
+            <div class="status-dot"></div>
+            <p>Portal Active • Vindicta Operations Command</p>
+        </div>
+    </footer>
+
+    <!-- Firebase Remote Config Initialization -->
+    <script type="module">
+        import { remoteConfig, analytics } from './assets/js/firebase-config.js';
+        import { REMOTE_CONFIG_DEFAULTS } from './assets/js/remote-config.defaults.js';
+        import { FeatureFlagService } from './assets/js/remote-config.js';
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const flags = new FeatureFlagService(remoteConfig, REMOTE_CONFIG_DEFAULTS, analytics);
+            await flags.initialize();
+
+            // Make service available globally for simple UI interactions
+            window.vindictaFlags = flags;
+            console.log("Vindicta Portal: Remote Config Initialized");
+
+            // Auto-render override panel in development
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                import('./assets/js/remote-config-overrides.js').then(module => {
+                    const overrides = new module.FeatureOverridePanel(flags);
+                    overrides.render();
+                });
+            }
+
+            // Dispatch event for other scripts that might depend on flags
+            document.body.classList.remove('flags-loading');
+            document.dispatchEvent(new CustomEvent('vindicta:flags:ready', { detail: flags }));
+        });
+    </script>
+</body>
+
+</html>

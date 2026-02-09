@@ -1,0 +1,63 @@
+{
+    "version_string": "2.0",
+    "sections": [
+        {
+            "id": 101,
+            "title": "Introduction",
+            "rules": [
+                {
+                    "content_type": "header",
+                    "content": "Introduction"
+                },
+                {
+                    "content_type": "paragraph",
+                    "content": "Welcome to WARScribe, the standard notation for Warhammer 40k logging."
+                },
+                {
+                    "content_type": "paragraph",
+                    "content": "This specification defines the syntax and rules for recording game states."
+                }
+            ]
+        },
+        {
+            "id": 104,
+            "title": "Syntax Library",
+            "rules": [
+                {
+                    "content_type": "header",
+                    "content": "Syntax Library"
+                },
+                {
+                    "content_type": "sub_header",
+                    "content": "Basic Actions"
+                },
+                {
+                    "content_type": "list",
+                    "content": "MOV: Move unit\nSHT: Shoot weapon\nCHG: Charge enemy"
+                },
+                {
+                    "content_type": "sub_header",
+                    "content": "Advanced Actions"
+                },
+                {
+                    "content_type": "list",
+                    "content": "STR: Stratagem use\nABI: Ability activation"
+                }
+            ]
+        },
+        {
+            "id": 106,
+            "title": "Glossary",
+            "rules": [
+                {
+                    "content_type": "header",
+                    "content": "Glossary"
+                },
+                {
+                    "content_type": "list",
+                    "content": "Unit: A single model or squad.\nPhase: A turn segment."
+                }
+            ]
+        }
+    ]
+}

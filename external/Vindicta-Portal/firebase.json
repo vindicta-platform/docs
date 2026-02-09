@@ -1,0 +1,37 @@
+{
+    "hosting": {
+        "cleanUrls": true,
+        "public": "dist",
+        "ignore": [
+            "firebase.json",
+            ".gitignore",
+            ".venv/**",
+            ".firebase/**",
+            "**/node_modules/**",
+            "**/test-results/**",
+            "**/tests/**",
+            "**/specs/**",
+            "**/playwright-report/**",
+            "**/site/**",
+            "package.json",
+            "package-lock.json",
+            "playwright.config.ts",
+            "pyproject.toml",
+            "uv.lock",
+            "README.md",
+            "docs/**",
+            "scratch.md",
+            "mkdocs.yml"
+        ],
+        "rewrites": [
+            {
+                "source": "/platform/**",
+                "destination": "/platform/index.html"
+            },
+            {
+                "source": "/club/**",
+                "destination": "/club/index.html"
+            }
+        ]
+    }
+}
